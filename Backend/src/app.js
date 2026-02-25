@@ -1,0 +1,48 @@
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
+const logger = require('./utils/logger');
+
+const app = express();
+
+// Middleware & Security
+const setupSecurity = require('./config/security');
+setupSecurity(app);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Logging
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
+
+// Routes
+const authRoutes = require('./modules/auth/auth.routes');
+const userRoutes = require('./modules/users/user.routes');
+const leaveRoutes = require('./modules/leaves/leave.routes');
+
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/leaves', leaveRoutes);
+
+// Basic Route
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'OK', message: 'LeaveOrbit V2 API is running' });
+});
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+    logger.error(`${err.name}: ${err.message}`);
+    const statusCode = err.statusCode || 500;
+    res.status(statusCode).json({
+        status: 'error',
+        message: err.message || 'Internal Server Error',
+        stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    });
+});
+
+module.exports = app;

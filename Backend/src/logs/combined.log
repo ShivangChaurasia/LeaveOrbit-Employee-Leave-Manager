@@ -1,0 +1,35 @@
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:22:12.183Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:22:12.303Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:22:14.000Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:22:50.723Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:23:03.234Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:23:03.357Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:23:03.384Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:23:03.393Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:23:04.543Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:23:25.248Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:23:37.458Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:23:37.544Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:23:38.610Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:23:47.228Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:24:37.914Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:24:38.009Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:24:39.232Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:26:22.986Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:26:23.078Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-02.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:26:24.842Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:28:05.375Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:28:05.460Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:28:06.766Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:28:56.101Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:28:56.199Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:28:57.486Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:31:07.012Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:31:07.128Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-02.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:31:08.653Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:32:10.584Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:32:11.070Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:32:10.609Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:32:11.090Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:32:12.673Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:32:13.106Z"}

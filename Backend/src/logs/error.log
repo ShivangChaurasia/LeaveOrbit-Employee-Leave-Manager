@@ -1,0 +1,15 @@
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:22:12.183Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:22:50.723Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:23:03.234Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:23:03.384Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:23:03.393Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:23:25.248Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:23:37.458Z"}
+{"level":"error","message":"TypeError: Cannot set property query of #<IncomingMessage> which has only a getter","timestamp":"2026-02-25T16:23:47.228Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:24:37.914Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:26:22.986Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:28:05.375Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:28:56.101Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:31:07.012Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:32:10.584Z"}
+{"level":"error","message":"Firebase Admin initialization error: Service account object must contain a string \"project_id\" property.","timestamp":"2026-02-25T16:32:10.609Z"}

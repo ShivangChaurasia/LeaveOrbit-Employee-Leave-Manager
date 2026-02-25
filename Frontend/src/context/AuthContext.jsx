@@ -1,0 +1,77 @@
+import { createContext, useContext, useState, useEffect } from 'react';
+import api from '../services/api';
+import { auth, googleProvider } from '../services/firebase';
+import { signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth';
+
+const AuthContext = createContext();
+
+export const useAuth = () => useContext(AuthContext);
+
+export const AuthProvider = ({ children }) => {
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    const login = async (email, password) => {
+        const response = await api.post('/auth/login', { email, password });
+        setUser(response.data.data.user);
+        localStorage.setItem('accessToken', response.data.data.accessToken);
+        return response.data.data.user;
+    };
+
+    const register = async (userData) => {
+        const response = await api.post('/auth/register', userData);
+        return response.data.data.user;
+    };
+
+    const firebaseLogin = async (idToken) => {
+        const response = await api.post('/auth/firebase', { idToken });
+        setUser(response.data.data.user);
+        localStorage.setItem('accessToken', response.data.data.accessToken);
+        return response.data.data.user;
+    };
+
+    const googleLogin = async () => {
+        const result = await signInWithPopup(auth, googleProvider);
+        const idToken = await result.user.getIdToken();
+        return firebaseLogin(idToken);
+    };
+
+    const logout = async () => {
+        await api.post('/auth/logout');
+        setUser(null);
+        localStorage.removeItem('accessToken');
+        await signOut(auth);
+    };
+
+    const checkAuthStatus = async () => {
+        try {
+            const response = await api.get('/users/profile');
+            setUser(response.data.data.user);
+        } catch (error) {
+            setUser(null);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        checkAuthStatus();
+    }, []);
+
+    const value = {
+        user,
+        loading,
+        login,
+        register,
+        googleLogin,
+        firebaseLogin,
+        logout,
+        setUser,
+    };
+
+    return (
+        <AuthContext.Provider value={value}>
+            {!loading && children}
+        </AuthContext.Provider>
+    );
+};
