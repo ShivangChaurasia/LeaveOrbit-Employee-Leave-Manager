@@ -1,10 +1,15 @@
-import { useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export const ProtectedRoute = () => {
     const { user, loading } = useAuth();
     const location = useLocation();
 
-    if (loading) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white font-bold">Loading...</div>;
+    if (loading) return (
+        <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+    );
 
     if (!user) return <Navigate to="/login" replace />;
 
@@ -24,7 +29,11 @@ export const ProtectedRoute = () => {
 export const RoleRoute = ({ allowedRoles }) => {
     const { user, loading } = useAuth();
 
-    if (loading) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white font-bold">Loading...</div>;
+    if (loading) return (
+        <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+    );
     if (!user) return <Navigate to="/login" replace />;
 
     if (!allowedRoles.includes(user.role)) {
@@ -37,7 +46,11 @@ export const RoleRoute = ({ allowedRoles }) => {
 export const PublicRoute = ({ children }) => {
     const { user, loading } = useAuth();
 
-    if (loading) return <div className="min-h-screen bg-slate-950 flex items-center justify-center text-white font-bold">Loading...</div>;
+    if (loading) return (
+        <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+    );
 
     if (user) {
         if (!user.onboardingCompleted) return <Navigate to="/onboarding" replace />;

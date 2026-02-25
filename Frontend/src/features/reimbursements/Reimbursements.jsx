@@ -107,14 +107,14 @@ export const Reimbursements = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {stats.map((stat) => (
-                    <div key={stat.label} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+                    <div key={stat.label} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm dark:shadow-none transition-all">
                         <div className="flex items-center gap-4">
-                            <div className={`p-3 rounded-2xl bg-${stat.color}-100 dark:bg-${stat.color}-900/30 text-${stat.color}-600 dark:text-${stat.color}-400`}>
+                            <div className={`p-3 rounded-2xl bg-${stat.color}-100/50 dark:bg-${stat.color}-900/30 text-${stat.color}-600 dark:text-${stat.color}-400`}>
                                 <stat.icon size={24} />
                             </div>
                             <div>
                                 <div className="text-2xl font-black text-slate-900 dark:text-white leading-none">{stat.value}</div>
-                                <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">{stat.label}</div>
+                                <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mt-1">{stat.label}</div>
                             </div>
                         </div>
                     </div>
@@ -210,10 +210,10 @@ export const Reimbursements = () => {
                     <table className="w-full">
                         <thead className="bg-slate-50 dark:bg-slate-800/50">
                             <tr>
-                                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-500 uppercase tracking-widest">Description</th>
-                                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-500 uppercase tracking-widest">Amount</th>
-                                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-500 uppercase tracking-widest">Category</th>
-                                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-500 uppercase tracking-widest">Status</th>
+                                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-600 dark:text-slate-500 uppercase tracking-widest">Description</th>
+                                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-600 dark:text-slate-500 uppercase tracking-widest">Amount</th>
+                                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-600 dark:text-slate-500 uppercase tracking-widest">Category</th>
+                                <th className="px-6 py-4 text-left text-[10px] font-black text-slate-600 dark:text-slate-500 uppercase tracking-widest">Status</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-100 dark:divide-slate-800">

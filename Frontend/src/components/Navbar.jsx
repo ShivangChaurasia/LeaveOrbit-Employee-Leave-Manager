@@ -19,6 +19,9 @@ import {
     Wallet
 } from 'lucide-react';
 
+import Lottie from 'lottie-react';
+import logoData from '../Assets/logo.json';
+
 export const Navbar = () => {
     const { user, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
@@ -41,13 +44,15 @@ export const Navbar = () => {
     };
 
     return (
-        <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 transition-colors">
+        <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 transition-all duration-500">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-16">
                     <div className="flex items-center gap-8">
                         <Link to="/" className="flex items-center gap-2 group">
-                            <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black group-hover:rotate-12 transition-transform shadow-lg shadow-blue-600/20">L</div>
-                            <span className="text-xl font-black tracking-tighter text-slate-900 dark:text-white">LEAVEOBIT</span>
+                            <div className="w-10 h-10 flex items-center justify-center transition-transform group-hover:scale-105">
+                                <Lottie animationData={logoData} loop={true} className="w-full h-full" />
+                            </div>
+                            <span className="text-xl font-bold text-slate-900 dark:text-white">LeaveOrbit</span>
                         </Link>
 
                         {/* Desktop Menu */}
@@ -77,10 +82,6 @@ export const Navbar = () => {
                             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
 
-                        <button className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors relative">
-                            <Bell size={20} />
-                            <span className="absolute top-2 right-2 w-2 h-2 bg-blue-600 rounded-full border-2 border-white dark:border-slate-900"></span>
-                        </button>
 
                         {/* Profile or Guest Links */}
                         {user ? (
@@ -128,8 +129,8 @@ export const Navbar = () => {
                             </div>
                         ) : (
                             <div className="flex items-center gap-2 ml-4">
-                                <Link to="/login" className="px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Sign In</Link>
-                                <Link to="/register" className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-black rounded-xl transition-all shadow-lg shadow-blue-600/20">Join Now</Link>
+                                <Link to="/login" className="px-4 py-2 text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Login</Link>
+                                <Link to="/register" className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-all shadow-md">Sign Up</Link>
                             </div>
                         )}
 

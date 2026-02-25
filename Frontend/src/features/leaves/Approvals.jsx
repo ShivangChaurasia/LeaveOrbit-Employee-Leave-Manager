@@ -42,12 +42,12 @@ export const Approvals = () => {
     return (
         <div className="space-y-8">
             <header>
-                <h1 className="text-3xl font-bold text-white">Pending Approvals</h1>
-                <p className="text-slate-400">Review and action leave requests from your department</p>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Pending Approvals</h1>
+                <p className="text-slate-600 dark:text-slate-400">Review and action leave requests from your department</p>
             </header>
 
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-                <div className="divide-y divide-slate-800">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-none transition-all">
+                <div className="divide-y divide-slate-100 dark:divide-slate-800">
                     {loading ? (
                         <div className="p-12 text-center text-slate-500">Loading requests...</div>
                     ) : leaves.length === 0 ? (
@@ -61,11 +61,11 @@ export const Approvals = () => {
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-2 mb-1">
-                                            <span className="text-white font-bold text-lg">{leave.employee.name}</span>
-                                            <span className="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">{leave.employee.department}</span>
+                                            <span className="text-slate-900 dark:text-white font-bold text-lg">{leave.employee.name}</span>
+                                            <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded-full">{leave.employee.department}</span>
                                         </div>
-                                        <div className="text-slate-400 text-sm mb-3">
-                                            Requested <span className="text-white font-medium">{leave.totalDays} days</span> for <span className="text-white font-medium">{leave.leaveType}</span>
+                                        <div className="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                                            Requested <span className="text-slate-900 dark:text-white font-medium">{leave.totalDays} days</span> for <span className="text-slate-900 dark:text-white font-medium">{leave.leaveType}</span>
                                         </div>
                                         <div className="flex items-center gap-4 text-xs text-slate-500">
                                             <div className="flex items-center gap-1">
@@ -77,7 +77,7 @@ export const Approvals = () => {
                                                 Applied on {new Date(leave.createdAt).toLocaleDateString()}
                                             </div>
                                         </div>
-                                        <div className="mt-3 bg-slate-800/50 p-3 rounded-lg text-sm text-slate-300 italic border-l-2 border-blue-500">
+                                        <div className="mt-3 bg-slate-50 dark:bg-slate-800/50 p-3 rounded-lg text-sm text-slate-600 dark:text-slate-300 italic border-l-2 border-blue-500">
                                             "{leave.reason}"
                                         </div>
                                     </div>

@@ -10,16 +10,24 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showSuccess, setShowSuccess] = useState(false);
+
+    const triggerSuccess = () => {
+        setShowSuccess(true);
+        setTimeout(() => setShowSuccess(false), 3000);
+    };
 
     const login = async (email, password) => {
         const response = await api.post('/auth/login', { email, password });
         setUser(response.data.data.user);
         localStorage.setItem('accessToken', response.data.data.accessToken);
+        triggerSuccess();
         return response.data.data.user;
     };
 
     const register = async (userData) => {
         const response = await api.post('/auth/register', userData);
+        triggerSuccess();
         return response.data.data.user;
     };
 
@@ -27,17 +35,27 @@ export const AuthProvider = ({ children }) => {
         const response = await api.post('/auth/firebase', { idToken });
         setUser(response.data.data.user);
         localStorage.setItem('accessToken', response.data.data.accessToken);
+        triggerSuccess();
         return response.data.data.user;
     };
 
     const googleLogin = async () => {
-        const result = await signInWithPopup(auth, googleProvider);
-        const idToken = await result.user.getIdToken();
-        return firebaseLogin(idToken);
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            const idToken = await result.user.getIdToken();
+            return await firebaseLogin(idToken);
+        } catch (error) {
+            console.error('Google Login Error:', error);
+            throw error;
+        }
     };
 
     const logout = async () => {
-        await api.post('/auth/logout');
+        try {
+            await api.post('/auth/logout');
+        } catch (err) {
+            console.error('Logout error:', err);
+        }
         setUser(null);
         localStorage.removeItem('accessToken');
         await signOut(auth);
@@ -68,6 +86,8 @@ export const AuthProvider = ({ children }) => {
     const value = {
         user,
         loading,
+        showSuccess,
+        setShowSuccess,
         login,
         register,
         googleLogin,

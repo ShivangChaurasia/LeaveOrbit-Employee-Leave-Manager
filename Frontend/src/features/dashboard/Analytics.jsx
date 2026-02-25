@@ -54,27 +54,27 @@ export const Analytics = () => {
 
     return (
         <div className="space-y-8">
-            <h1 className="text-3xl font-bold text-white">Analytics</h1>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Analytics</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl h-[400px]">
-                    <h2 className="text-lg font-bold text-white mb-6">Monthly Leave Trends</h2>
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl h-[400px] shadow-sm dark:shadow-none">
+                    <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Monthly Leave Trends</h2>
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={data.trends}>
-                            <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+                            <CartesianGrid strokeDasharray="3 3" stroke="currentColor" className="text-slate-100 dark:text-slate-800" />
                             <XAxis dataKey="name" stroke="#64748b" />
                             <YAxis stroke="#64748b" />
                             <Tooltip
-                                contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b' }}
-                                itemStyle={{ color: '#fff' }}
+                                contentStyle={{ backgroundColor: 'var(--tooltip-bg, #fff)', border: '1px solid #1e293b' }}
+                                itemStyle={{ color: 'var(--tooltip-text, #0f172a)' }}
                             />
                             <Bar dataKey="count" fill="#3b82f6" radius={[4, 4, 0, 0]} />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
 
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-2xl h-[400px]">
-                    <h2 className="text-lg font-bold text-white mb-6">Approval Status Ratio</h2>
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl h-[400px] shadow-sm dark:shadow-none">
+                    <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-6">Approval Status Ratio</h2>
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie
@@ -91,8 +91,8 @@ export const Analytics = () => {
                                 ))}
                             </Pie>
                             <Tooltip
-                                contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b' }}
-                                itemStyle={{ color: '#fff' }}
+                                contentStyle={{ backgroundColor: 'var(--tooltip-bg)', border: '1px solid #1e293b' }}
+                                itemStyle={{ color: 'var(--tooltip-text)' }}
                             />
                         </PieChart>
                     </ResponsiveContainer>

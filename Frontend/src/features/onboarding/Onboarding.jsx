@@ -11,6 +11,7 @@ export const Onboarding = () => {
     const [role, setRole] = useState('employee');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [submitted, setSubmitted] = useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -41,7 +42,7 @@ export const Onboarding = () => {
                     <div className="bg-yellow-600/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
                         <Briefcase className="text-yellow-500" size={32} />
                     </div>
-                    <h1 className="text-2xl font-bold text-white mb-2">Request Submitted!</h1>
+                    <h1 className="text-2xl font-bold text-white mb-2 uppercase tracking-tight">Request Submitted</h1>
                     <p className="text-slate-400 mb-8">
                         Your request to join as a <strong>Manager</strong> for the <strong>{department}</strong> department is pending admin approval.
                         You will be able to access the dashboard once approved.
@@ -65,7 +66,7 @@ export const Onboarding = () => {
                         <UserPlus className="text-blue-500" size={24} />
                     </div>
                     <div>
-                        <h1 className="text-2xl font-bold text-white">Welcome to LeaveOrbit</h1>
+                        <h1 className="text-2xl font-bold text-white uppercase tracking-tight">Welcome to LeaveOrbit</h1>
                         <p className="text-slate-400">Let's get your profile set up</p>
                     </div>
                 </div>

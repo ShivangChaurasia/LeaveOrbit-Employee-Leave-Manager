@@ -28,8 +28,8 @@ export const LeaveForm = ({ onSuccess }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6 bg-slate-900 border border-slate-800 p-6 rounded-2xl">
-            <h2 className="text-xl font-bold text-white mb-4">Request Leave</h2>
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Request Leave</h2>
 
             {error && (
                 <div className="bg-red-900/20 border border-red-900 text-red-400 p-3 rounded-lg text-sm flex items-center gap-2">
@@ -40,24 +40,24 @@ export const LeaveForm = ({ onSuccess }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-slate-400 mb-2">Start Date</label>
+                    <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Start Date</label>
                     <input
                         type="date"
                         value={formData.startDate}
                         min={new Date().toISOString().split('T')[0]}
                         onChange={(e) => setFormData({ ...formData, startDate: e.target.value, endDate: '' })}
-                        className="w-full bg-slate-800 border border-slate-700 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
                         required
                     />
                 </div>
                 <div>
-                    <label className="block text-sm font-medium text-slate-400 mb-2">End Date</label>
+                    <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">End Date</label>
                     <input
                         type="date"
                         value={formData.endDate}
                         min={formData.startDate || new Date().toISOString().split('T')[0]}
                         onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                        className="w-full bg-slate-800 border border-slate-700 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                        className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-2.5 px-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
                         required
                     />
                 </div>
@@ -65,11 +65,11 @@ export const LeaveForm = ({ onSuccess }) => {
 
 
             <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">Leave Type</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Leave Type</label>
                 <select
                     value={formData.leaveType}
                     onChange={(e) => setFormData({ ...formData, leaveType: e.target.value })}
-                    className="w-full bg-slate-800 border border-slate-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-2 px-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     required
                 >
                     <option value="Sick">Sick Leave</option>
@@ -82,11 +82,11 @@ export const LeaveForm = ({ onSuccess }) => {
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-slate-400 mb-2">Reason</label>
+                <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Reason</label>
                 <textarea
                     value={formData.reason}
                     onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
-                    className="w-full bg-slate-800 border border-slate-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
+                    className="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg py-2 px-4 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[100px]"
                     placeholder="Briefly explain the reason for your leave..."
                     required
                 ></textarea>
