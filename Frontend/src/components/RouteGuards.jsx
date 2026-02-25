@@ -13,8 +13,12 @@ export const ProtectedRoute = () => {
 
     if (!user) return <Navigate to="/login" replace />;
 
-    // Redirect to onboarding if not completed and not already on onboarding page
     if (!user.onboardingCompleted && location.pathname !== '/onboarding') {
+        return <Navigate to="/onboarding" replace />;
+    }
+
+    // Block access if account is not approved by Admin
+    if (user.accountStatus === 'pending' && location.pathname !== '/onboarding') {
         return <Navigate to="/onboarding" replace />;
     }
 

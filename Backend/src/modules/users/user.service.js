@@ -53,6 +53,29 @@ const approveManager = async (managerId, status) => {
     return manager;
 };
 
+const approveAccount = async (userId, status) => {
+    const user = await User.findById(userId);
+    if (!user) {
+        const error = new Error('User not found');
+        error.statusCode = 404;
+        throw error;
+    }
+
+    user.accountStatus = status;
+    await user.save();
+    return user;
+};
+
+const deleteUser = async (userId) => {
+    const user = await User.findByIdAndDelete(userId);
+    if (!user) {
+        const error = new Error('User not found');
+        error.statusCode = 404;
+        throw error;
+    }
+    return user;
+};
+
 const updateProfile = async (userId, updateData) => {
     return await User.findByIdAndUpdate(userId, updateData, { new: true, runValidators: true });
 };
@@ -62,5 +85,7 @@ module.exports = {
     getUserById,
     completeOnboarding,
     approveManager,
+    approveAccount,
+    deleteUser,
     updateProfile,
 };

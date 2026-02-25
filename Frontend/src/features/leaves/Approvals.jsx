@@ -8,8 +8,10 @@ import {
     User,
     Calendar
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 export const Approvals = () => {
+    const { user } = useAuth();
     const [leaves, setLeaves] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -42,8 +44,12 @@ export const Approvals = () => {
     return (
         <div className="space-y-8">
             <header>
-                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Pending Approvals</h1>
-                <p className="text-slate-600 dark:text-slate-400">Review and action leave requests from your department</p>
+                <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">Pending Approvals</h1>
+                <p className="text-slate-600 dark:text-slate-400 font-medium">
+                    {user.role === 'admin'
+                        ? 'Administrative review of Management leave requests.'
+                        : `Reviewing leave requests from the ${user.department} department.`}
+                </p>
             </header>
 
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-none transition-all">
@@ -62,6 +68,7 @@ export const Approvals = () => {
                                     <div>
                                         <div className="flex items-center gap-2 mb-1">
                                             <span className="text-slate-900 dark:text-white font-bold text-lg">{leave.employee.name}</span>
+                                            <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 px-2 py-0.5 rounded-md">{leave.employee.role}</span>
                                             <span className="text-xs bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded-full">{leave.employee.department}</span>
                                         </div>
                                         <div className="text-slate-600 dark:text-slate-400 text-sm mb-3">

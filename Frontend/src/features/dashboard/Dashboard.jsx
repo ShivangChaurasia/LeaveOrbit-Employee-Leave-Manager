@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import api from '../../services/api';
 import {
@@ -10,26 +11,47 @@ import {
 } from 'lucide-react';
 
 export const Dashboard = () => {
+    const navigate = useNavigate();
     const { user } = useAuth();
     const [stats, setStats] = useState({
         pending: 0,
         approved: 0,
         rejected: 0,
+        totalUsers: 0,
+        pendingRequests: 0,
         balance: user?.leaveBalance || 0
     });
 
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
-                const response = await api.get('/leaves/my');
-                const leaves = response.data.data.leaves;
-                const newStats = {
-                    pending: leaves.filter(l => l.status === 'pending').length,
-                    approved: leaves.filter(l => l.status === 'approved').length,
-                    rejected: leaves.filter(l => l.status === 'rejected').length,
-                    balance: user?.leaveBalance || 0
-                };
-                setStats(newStats);
+                if (user.role === 'admin') {
+                    // Admin management stats
+                    const [usersRes, leavesRes] = await Promise.all([
+                        api.get('/users'),
+                        api.get('/leaves/all')
+                    ]);
+
+                    const users = usersRes.data.data.users;
+                    const leaves = leavesRes.data.data.leaves;
+
+                    setStats({
+                        totalUsers: users.length,
+                        pendingRequests: users.filter(u => u.accountStatus === 'pending').length,
+                        pending: leaves.filter(l => l.status === 'pending' && l.employee?.role === 'manager').length,
+                        balance: users.filter(u => !u.onLeave).length // Overload balance for "Available Employees"
+                    });
+                } else {
+                    // Employee/Manager stats
+                    const response = await api.get('/leaves/my');
+                    const leaves = response.data.data.leaves;
+                    setStats({
+                        pending: leaves.filter(l => l.status === 'pending').length,
+                        approved: leaves.filter(l => l.status === 'approved').length,
+                        rejected: leaves.filter(l => l.status === 'rejected').length,
+                        balance: user?.leaveBalance || 0
+                    });
+                }
             } catch (error) {
                 console.error('Failed to fetch dashboard data', error);
             }
@@ -37,7 +59,12 @@ export const Dashboard = () => {
         fetchDashboardData();
     }, [user]);
 
-    const statCards = [
+    const statCards = user.role === 'admin' ? [
+        { label: 'Total Employees', value: stats.totalUsers, icon: CheckCircle2, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+        { label: 'Account Requests', value: stats.pendingRequests, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+        { label: 'Manager Approvals', value: stats.pending, icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+        { label: 'Available Today', value: stats.balance, icon: Calendar, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
+    ] : [
         { label: 'Available Balance', value: stats.balance, icon: Calendar, color: 'text-blue-500', bg: 'bg-blue-500/10' },
         { label: 'Pending Requests', value: stats.pending, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/10' },
         { label: 'Approved', value: stats.approved, icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
@@ -68,22 +95,31 @@ export const Dashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-none">
                     <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
-                        <h2 className="text-xl font-bold text-slate-900 dark:text-white">Recent Activity</h2>
+                        <h2 className="text-xl font-bold text-slate-900 dark:text-white">Recent System Activity</h2>
                         <button className="text-blue-500 text-sm font-medium flex items-center gap-1 hover:underline">
-                            View all <ArrowRight size={16} />
+                            View logs <ArrowRight size={16} />
                         </button>
                     </div>
                     <div className="p-6 text-slate-500 text-center py-12">
-                        No recent activity found.
+                        {user.role === 'admin' ? 'Monitoring organization-wide activity...' : 'No recent activity found.'}
                     </div>
                 </div>
 
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 text-white relative overflow-hidden shadow-xl shadow-blue-500/20">
                     <div className="relative z-10">
-                        <h2 className="text-2xl font-bold mb-2">Need a break?</h2>
-                        <p className="text-blue-100 mb-6">Apply for your next leave in just a few clicks.</p>
-                        <button className="bg-white text-blue-600 px-6 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors">
-                            Apply for Leave
+                        <h2 className="text-2xl font-bold mb-2">
+                            {user.role === 'admin' ? 'Strategic Overview' : 'Need a break?'}
+                        </h2>
+                        <p className="text-blue-100 mb-6">
+                            {user.role === 'admin'
+                                ? 'Review pending approvals and optimize team availability.'
+                                : 'Apply for your next leave in just a few clicks.'}
+                        </p>
+                        <button
+                            onClick={() => navigate(user.role === 'admin' ? '/requests' : '/leaves')}
+                            className="bg-white text-blue-600 px-6 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors"
+                        >
+                            {user.role === 'admin' ? 'View Requests' : 'Apply for Leave'}
                         </button>
                     </div>
                     <Calendar className="absolute -right-8 -bottom-8 text-blue-400/20 w-48 h-48 -rotate-12" />

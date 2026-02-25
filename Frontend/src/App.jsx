@@ -15,6 +15,7 @@ import { Approvals } from './features/leaves/Approvals';
 import { Home } from './features/home/Home';
 import { RoleHome } from './features/home/RoleHome';
 import { UserManagement } from './features/admin/UserManagement';
+import { AccountRequests } from './features/admin/AccountRequests';
 import { Settings } from './features/settings/Settings';
 import { Reimbursements } from './features/reimbursements/Reimbursements';
 
@@ -45,6 +46,7 @@ function AppContent() {
             <Route path="/approvals" element={<Approvals />} />
             <Route path="/reimbursements" element={<Reimbursements />} />
             <Route path="/users" element={<UserManagement />} />
+            <Route path="/requests" element={<AccountRequests />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/onboarding" element={<Onboarding />} />
           </Route>

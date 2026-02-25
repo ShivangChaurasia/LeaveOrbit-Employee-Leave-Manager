@@ -42,10 +42,15 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    accountStatus: {
+        type: String,
+        enum: ['pending', 'approved', 'rejected'],
+        default: 'pending',
+    },
     managerApprovalStatus: {
         type: String,
         enum: ['pending', 'approved', 'rejected'],
-        default: 'approved', // Default to approved for employees; managers will set to pending in onboarding
+        default: 'approved',
     },
 }, {
     timestamps: true,

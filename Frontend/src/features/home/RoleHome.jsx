@@ -69,10 +69,10 @@ export const RoleHome = () => {
                                 Open Workspace
                             </Link>
                             <Link
-                                to="/leaves"
+                                to={user.role === 'admin' ? '/users' : '/leaves'}
                                 className="px-8 py-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-900 dark:text-white font-bold transition-all active:scale-95"
                             >
-                                My Schedule
+                                {user.role === 'admin' ? 'Employee Directory' : 'My Schedule'}
                             </Link>
                         </div>
                     </motion.div>

@@ -84,11 +84,34 @@ const changePassword = async (req, res, next) => {
     }
 };
 
+const approveAccount = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const user = await userService.approveAccount(id, status);
+        res.status(200).json({ status: 'success', data: { user } });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteUser = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        await userService.deleteUser(id);
+        res.status(200).json({ status: 'success', message: 'User deleted successfully' });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getProfile,
     completeOnboarding,
     getAllUsers,
     approveManager,
+    approveAccount,
+    deleteUser,
     updateProfile,
     changePassword,
 };

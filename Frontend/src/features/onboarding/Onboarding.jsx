@@ -23,7 +23,7 @@ export const Onboarding = () => {
             const updatedUser = response.data.data.user;
             setUser(updatedUser);
 
-            if (role === 'manager' && updatedUser.managerApprovalStatus === 'pending') {
+            if (updatedUser.accountStatus === 'pending') {
                 setSubmitted(true);
             } else {
                 navigate('/dashboard');
@@ -35,21 +35,24 @@ export const Onboarding = () => {
         }
     };
 
-    if (submitted) {
+    if (submitted || (user?.onboardingCompleted && user?.accountStatus === 'pending')) {
         return (
-            <div className="max-w-xl mx-auto mt-12">
-                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl text-center">
+            <div className="max-w-xl mx-auto mt-12 px-4">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-xl text-center">
                     <div className="bg-yellow-600/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                        <Briefcase className="text-yellow-500" size={32} />
+                        <Briefcase className="text-yellow-600 dark:text-yellow-500" size={32} />
                     </div>
-                    <h1 className="text-2xl font-bold text-white mb-2 uppercase tracking-tight">Request Submitted</h1>
-                    <p className="text-slate-400 mb-8">
-                        Your request to join as a <strong>Manager</strong> for the <strong>{department}</strong> department is pending admin approval.
-                        You will be able to access the dashboard once approved.
+                    <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 uppercase tracking-tight">Access Pending</h1>
+                    <p className="text-slate-600 dark:text-slate-400 mb-8">
+                        Hi <strong>{user?.name}</strong>, your account setup for <strong>{user?.department || department}</strong> is complete.
+                        To ensure security, all new accounts require <strong>Admin Approval</strong> before you can access the platform.
                     </p>
+                    <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl mb-8 text-sm text-slate-500 dark:text-slate-400">
+                        <p>Our administrators have been notified. Please check back later.</p>
+                    </div>
                     <button
                         onClick={() => navigate('/')}
-                        className="w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 rounded-lg transition-all"
+                        className="w-full bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-semibold py-3 rounded-lg transition-all"
                     >
                         Back to Home
                     </button>

@@ -3,6 +3,19 @@ const User = require('../users/user.model');
 const mongoose = require('mongoose');
 
 const applyLeave = async (employeeId, leaveData) => {
+    const user = await User.findById(employeeId);
+    if (!user) {
+        const error = new Error('User not found');
+        error.statusCode = 404;
+        throw error;
+    }
+
+    if (user.role === 'admin') {
+        const error = new Error('Admins are not allowed to apply for leave');
+        error.statusCode = 403;
+        throw error;
+    }
+
     const { startDate, endDate, leaveType, reason } = leaveData;
     const start = new Date(startDate);
     const end = new Date(endDate);
@@ -40,7 +53,6 @@ const applyLeave = async (employeeId, leaveData) => {
     }
 
     // 4. Prevent negative leave balance
-    const user = await User.findById(employeeId);
     if (user.leaveBalance < totalDays) {
         const error = new Error(`Insufficient leave balance. Remaining: ${user.leaveBalance}, Requested: ${totalDays}`);
         error.statusCode = 400;
@@ -63,19 +75,32 @@ const getMyLeaves = async (employeeId) => {
     return await Leave.find({ employee: employeeId }).sort({ startDate: -1 });
 };
 
-const getPendingLeavesForApproval = async (managerId) => {
-    const manager = await User.findById(managerId);
-    // Managers can only approve leaves within their department
-    return await Leave.find({
-        status: 'pending',
-        employee: { $ne: managerId } // Cannot approve own leave
-    })
-        .populate({
-            path: 'employee',
-            match: { department: manager.department }
-        })
-        .lean()
-        .then(leaves => leaves.filter(l => l.employee !== null));
+const getPendingLeavesForApproval = async (reviewerId) => {
+    const reviewer = await User.findById(reviewerId);
+
+    if (reviewer.role === 'admin') {
+        // Admin approves leaves for Managers across all departments
+        return await Leave.find({ status: 'pending' })
+            .populate({
+                path: 'employee',
+                match: { role: 'manager' }
+            })
+            .lean()
+            .then(leaves => leaves.filter(l => l.employee !== null));
+    }
+
+    if (reviewer.role === 'manager') {
+        // Manager approves leaves for Employees in their department
+        return await Leave.find({ status: 'pending' })
+            .populate({
+                path: 'employee',
+                match: { role: 'employee', department: reviewer.department }
+            })
+            .lean()
+            .then(leaves => leaves.filter(l => l.employee !== null));
+    }
+
+    return [];
 };
 
 const updateLeaveStatus = async (leaveId, status, reviewerId, note) => {
@@ -94,19 +119,29 @@ const updateLeaveStatus = async (leaveId, status, reviewerId, note) => {
 
     const reviewer = await User.findById(reviewerId);
 
-    // Rule: Manager must be in same department
-    if (reviewer.role === 'manager' && leave.employee.department !== reviewer.department) {
-        const error = new Error('You can only approve leaves within your department');
+    // Enforce Hierarchy
+    if (reviewer.role === 'manager') {
+        if (leave.employee.role !== 'employee' || leave.employee.department !== reviewer.department) {
+            const error = new Error('Managers can only approve department employees');
+            error.statusCode = 403;
+            throw error;
+        }
+    } else if (reviewer.role === 'admin') {
+        if (leave.employee.role !== 'manager') {
+            const error = new Error('Admins specifically approve manager leaves');
+            error.statusCode = 403;
+            throw error;
+        }
+    } else {
+        const error = new Error('Unauthorized role for leave approval');
         error.statusCode = 403;
         throw error;
     }
 
-    // Double approval protection (already handled by status !== 'pending' but extra check)
     leave.status = status;
     leave.reviewedBy = reviewerId;
     leave.reviewNote = note;
 
-    // If approved, deduct leave balance
     if (status === 'approved') {
         const employee = await User.findById(leave.employee._id);
         employee.leaveBalance -= leave.totalDays;

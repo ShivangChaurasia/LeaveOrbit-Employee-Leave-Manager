@@ -41,6 +41,17 @@ export const UserManagement = () => {
         user.email?.toLowerCase().includes(search.toLowerCase())
     );
 
+    const handleDeleteUser = async (userId) => {
+        if (!window.confirm('Are you sure you want to terminate this account? This action cannot be undone.')) return;
+        try {
+            await api.delete(`/users/${userId}`);
+            fetchUsers();
+        } catch (err) {
+            setError('Failed to delete user');
+            console.error(err);
+        }
+    };
+
     if (loading) return (
         <div className="flex items-center justify-center min-h-[400px]">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -52,7 +63,7 @@ export const UserManagement = () => {
             <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Employee Directory</h1>
-                    <p className="text-slate-600 dark:text-slate-400 font-medium">Manage all registered employees and their permissions.</p>
+                    <p className="text-slate-600 dark:text-slate-400 font-medium">Manage all active employees and managers in your organization.</p>
                 </div>
                 <div className="flex items-center gap-3 w-full md:w-auto">
                     <div className="relative flex-1 md:w-64">
@@ -76,16 +87,28 @@ export const UserManagement = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredUsers.map((user) => (
-                    <div key={user._id} className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/5">
+                    <div key={user._id} className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/5 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            {user.role !== 'admin' && (
+                                <button
+                                    onClick={() => handleDeleteUser(user._id)}
+                                    className="p-2 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-xl hover:bg-rose-600 hover:text-white dark:hover:bg-rose-600 transition-colors"
+                                    title="Terminate Account"
+                                >
+                                    <XCircle size={18} />
+                                </button>
+                            )}
+                        </div>
+
                         <div className="flex items-start justify-between mb-6">
                             <div className="w-14 h-14 rounded-2xl bg-blue-600/10 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
                                 <UserCircle size={32} />
                             </div>
                             <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${user.role === 'admin'
-                                    ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
-                                    : user.role === 'manager'
-                                        ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
-                                        : 'bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400'
+                                ? 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400'
+                                : user.role === 'manager'
+                                    ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400'
+                                    : 'bg-slate-100 dark:bg-slate-800/50 text-slate-600 dark:text-slate-400'
                                 }`}>
                                 {user.role}
                             </div>
@@ -109,22 +132,17 @@ export const UserManagement = () => {
                                     </div>
                                 </div>
                                 <div className="space-y-1">
-                                    <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</div>
+                                    <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Availability</div>
                                     <div className="flex items-center gap-1.5 text-xs font-bold">
-                                        {user.managerApprovalStatus === 'approved' ? (
+                                        {user.onLeave ? (
                                             <>
-                                                <CheckCircle2 size={12} className="text-emerald-500" />
-                                                <span className="text-emerald-600 dark:text-emerald-400">Verified</span>
-                                            </>
-                                        ) : user.managerApprovalStatus === 'rejected' ? (
-                                            <>
-                                                <XCircle size={12} className="text-rose-500" />
-                                                <span className="text-rose-600">Denied</span>
+                                                <Clock size={12} className="text-amber-500" />
+                                                <span className="text-amber-600">On Leave</span>
                                             </>
                                         ) : (
                                             <>
-                                                <Clock size={12} className="text-amber-500" />
-                                                <span className="text-amber-600">Pending</span>
+                                                <CheckCircle2 size={12} className="text-emerald-500" />
+                                                <span className="text-emerald-600 dark:text-emerald-400">Available</span>
                                             </>
                                         )}
                                     </div>

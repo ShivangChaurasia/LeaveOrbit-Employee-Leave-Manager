@@ -15,5 +15,7 @@ router.post('/onboarding', userController.completeOnboarding);
 // Admin only routes
 router.get('/', authorize('admin'), userController.getAllUsers);
 router.patch('/:id/approve-manager', authorize('admin'), userController.approveManager);
+router.patch('/:id/approve-account', authorize('admin'), userController.approveAccount);
+router.delete('/:id', authorize('admin'), userController.deleteUser);
 
 module.exports = router;

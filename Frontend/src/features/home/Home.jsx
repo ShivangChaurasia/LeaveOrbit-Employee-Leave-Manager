@@ -147,65 +147,6 @@ export const Home = () => {
                 </div>
             </section>
 
-
-            {/* Footer */}
-            <footer className="pt-32 pb-12 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 transition-colors duration-500">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 mb-24">
-                        <div className="col-span-1 lg:col-span-1">
-                            <Link to="/" className="flex items-center gap-2 mb-8 group">
-                                <div className="w-10 h-10 flex items-center justify-center transition-transform group-hover:scale-105">
-                                    <Lottie animationData={logoData} loop={true} className="w-full h-full" />
-                                </div>
-                                <span className="text-xl font-bold text-slate-900 dark:text-white uppercase transition-colors">LeaveOrbit</span>
-                            </Link>
-                            <p className="text-slate-400 font-medium leading-relaxed mb-8 font-inter">
-                                Intelligent Leave Management System for high-performance teams. Simple, fast, and automated.
-                            </p>
-                            <div className="flex items-center gap-4">
-                                <a href="https://github.com/ShivangChaurasia" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-blue-500/30 transition-all shadow-xl">
-                                    <Github size={22} />
-                                </a>
-                                <a href="https://www.linkedin.com/in/shivang-chaurasia-754232297/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-blue-500/30 transition-all shadow-xl">
-                                    <Linkedin size={22} />
-                                </a>
-                                <a href="mailto:shiva17ng@gmail.com" className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-blue-400 hover:border-blue-500/30 transition-all shadow-xl">
-                                    <Mail size={22} />
-                                </a>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h4 className="text-slate-900 dark:text-white font-bold uppercase tracking-widest text-xs mb-8">Explore</h4>
-                            <ul className="space-y-4 font-inter">
-                                {['Features', 'Dashboard', 'My Leaves', 'Approvals'].map(item => (
-                                    <li key={item}><a href="#" className="text-slate-600 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">{item}</a></li>
-                                ))}
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h4 className="text-slate-900 dark:text-white font-bold uppercase tracking-widest text-xs mb-8">Contact</h4>
-                            <ul className="space-y-4 font-inter">
-                                <li><a href="#" className="text-slate-600 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">Documentation</a></li>
-                                <li><a href="#" className="text-slate-600 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">Help Center</a></li>
-                                <li><a href="#" className="text-slate-600 dark:text-slate-500 hover:text-blue-600 dark:hover:text-blue-400 font-semibold transition-colors">Privacy Policy</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div className="pt-12 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-8">
-                        <div className="text-slate-500 text-sm font-bold">
-                            © 2026 LeaveOrbit. Built with <span className="text-rose-500">❤️</span> for modern teams.
-                        </div>
-                        <div className="flex items-center gap-8">
-                            <a href="#" className="text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors text-xs font-semibold uppercase tracking-wider">Privacy</a>
-                            <a href="#" className="text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors text-xs font-semibold uppercase tracking-wider">Terms</a>
-                            <a href="#" className="text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors text-xs font-semibold uppercase tracking-wider">Cookie Policy</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     );
 };

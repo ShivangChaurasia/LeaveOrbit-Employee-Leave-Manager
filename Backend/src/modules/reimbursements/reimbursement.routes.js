@@ -9,8 +9,8 @@ router.use(protect);
 router.get('/', reimbursementController.getMyReimbursements);
 router.post('/', reimbursementController.createReimbursement);
 
-// Manager/Admin only
-router.get('/all', authorize('manager', 'admin'), reimbursementController.getAllReimbursements);
-router.patch('/:id/status', authorize('manager', 'admin'), reimbursementController.updateStatus);
+// Admin only
+router.get('/all', authorize('admin'), reimbursementController.getAllReimbursements);
+router.patch('/:id/status', authorize('admin'), reimbursementController.updateStatus);
 
 module.exports = router;

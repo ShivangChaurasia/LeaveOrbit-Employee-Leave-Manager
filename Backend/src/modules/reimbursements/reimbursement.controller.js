@@ -2,6 +2,9 @@ const Reimbursement = require('./reimbursement.model');
 
 const createReimbursement = async (req, res, next) => {
     try {
+        if (req.user.role === 'admin') {
+            return res.status(403).json({ success: false, message: 'Admins cannot apply for reimbursements' });
+        }
         const reimbursement = await Reimbursement.create({
             ...req.body,
             user: req.user.id,
