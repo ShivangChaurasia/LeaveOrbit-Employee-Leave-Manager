@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../modules/users/user.model');
-const { verifyAccessToken } = require('../modules/auth/auth.utils');
+const { verifyToken } = require('../modules/auth/auth.utils');
 
 const protect = async (req, res, next) => {
     let token;
@@ -14,11 +14,14 @@ const protect = async (req, res, next) => {
     }
 
     try {
-        const decoded = verifyAccessToken(token);
+        const decoded = verifyToken(token);
         req.user = await User.findById(decoded.id);
+        if (!req.user) {
+            return res.status(401).json({ message: 'User not found' });
+        }
         next();
     } catch (error) {
-        return res.status(401).json({ message: 'Not authorized, token failed' });
+        return res.status(401).json({ message: 'Invalid or expired token' });
     }
 };
 

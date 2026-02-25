@@ -8,8 +8,8 @@ const getUserById = async (id) => {
     return await User.findById(id).lean();
 };
 
-const completeOnboarding = async (userId, onboardingData) => {
-    const { department, name } = onboardingData;
+const completeOnboarding = async (userId, data) => {
+    const { name, department, role } = data;
     const user = await User.findById(userId);
 
     if (!user) {
@@ -18,11 +18,12 @@ const completeOnboarding = async (userId, onboardingData) => {
         throw error;
     }
 
+    user.name = name || user.name;
     user.department = department;
-    if (name) user.name = name;
+    user.role = role || 'employee';
     user.onboardingCompleted = true;
 
-    // If manager, set status to pending (should already be default, but ensuring)
+    // If role is manager, set approval status to pending
     if (user.role === 'manager') {
         user.managerApprovalStatus = 'pending';
     } else {
@@ -33,7 +34,7 @@ const completeOnboarding = async (userId, onboardingData) => {
     return user;
 };
 
-const approveManager = async (managerId, status, adminId) => {
+const approveManager = async (managerId, status) => {
     const manager = await User.findById(managerId);
     if (!manager || manager.role !== 'manager') {
         const error = new Error('Manager not found');

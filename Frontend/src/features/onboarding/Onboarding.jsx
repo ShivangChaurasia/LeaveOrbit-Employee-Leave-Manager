@@ -16,10 +16,17 @@ export const Onboarding = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        setError('');
         try {
             const response = await api.post('/users/onboarding', { department, name, role });
-            setUser(response.data.data.user);
-            navigate('/dashboard');
+            const updatedUser = response.data.data.user;
+            setUser(updatedUser);
+
+            if (role === 'manager' && updatedUser.managerApprovalStatus === 'pending') {
+                setSubmitted(true);
+            } else {
+                navigate('/dashboard');
+            }
         } catch (err) {
             setError(err.response?.data?.message || 'Onboarding failed');
         } finally {
@@ -27,8 +34,31 @@ export const Onboarding = () => {
         }
     };
 
+    if (submitted) {
+        return (
+            <div className="max-w-xl mx-auto mt-12">
+                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl text-center">
+                    <div className="bg-yellow-600/20 p-4 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                        <Briefcase className="text-yellow-500" size={32} />
+                    </div>
+                    <h1 className="text-2xl font-bold text-white mb-2">Request Submitted!</h1>
+                    <p className="text-slate-400 mb-8">
+                        Your request to join as a <strong>Manager</strong> for the <strong>{department}</strong> department is pending admin approval.
+                        You will be able to access the dashboard once approved.
+                    </p>
+                    <button
+                        onClick={() => navigate('/')}
+                        className="w-full bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3 rounded-lg transition-all"
+                    >
+                        Back to Home
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     return (
-        <div className="max-w-xl mx-auto mt-12">
+        <div className="max-w-xl mx-auto mt-12 text-slate-100">
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
                 <div className="flex items-center gap-3 mb-6">
                     <div className="bg-blue-600/20 p-2 rounded-lg">

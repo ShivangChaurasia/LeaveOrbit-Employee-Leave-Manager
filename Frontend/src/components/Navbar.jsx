@@ -57,8 +57,8 @@ export const Navbar = () => {
                                     key={item.path}
                                     to={item.path}
                                     className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold transition-all ${location.pathname === item.path
-                                            ? 'bg-blue-600/10 text-blue-600 dark:text-blue-400'
-                                            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                        ? 'bg-blue-600/10 text-blue-600 dark:text-blue-400'
+                                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                                         }`}
                                 >
                                     <item.icon size={18} />
@@ -82,49 +82,56 @@ export const Navbar = () => {
                             <span className="absolute top-2 right-2 w-2 h-2 bg-blue-600 rounded-full border-2 border-white dark:border-slate-900"></span>
                         </button>
 
-                        {/* Profile Dropdown */}
-                        <div className="relative ml-2">
-                            <button
-                                onClick={() => setProfileOpen(!profileOpen)}
-                                className="flex items-center gap-2 p-1.5 pl-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-blue-500/50 transition-all group"
-                            >
-                                <div className="text-right hidden sm:block">
-                                    <div className="text-xs font-black text-slate-900 dark:text-white leading-none">{user?.name}</div>
-                                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">{user?.role}</div>
-                                </div>
-                                <UserCircle size={28} className="text-blue-600 dark:text-blue-400" />
-                                <ChevronDown size={14} className={`text-slate-400 transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
-                            </button>
-
-                            {profileOpen && (
-                                <>
-                                    <div className="fixed inset-0 z-10" onClick={() => setProfileOpen(false)}></div>
-                                    <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-20 overflow-hidden animate-in slide-in-from-top-2 duration-200">
-                                        <div className="p-4 border-b border-slate-100 dark:border-slate-800">
-                                            <div className="text-sm font-black text-slate-900 dark:text-white">{user?.name}</div>
-                                            <div className="text-xs font-medium text-slate-500 truncate">{user?.email}</div>
-                                        </div>
-                                        <div className="p-2">
-                                            <Link
-                                                to="/settings"
-                                                onClick={() => setProfileOpen(false)}
-                                                className="flex items-center gap-3 px-3 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
-                                            >
-                                                <Settings size={18} />
-                                                Account Settings
-                                            </Link>
-                                            <button
-                                                onClick={handleLogout}
-                                                className="w-full flex items-center gap-3 px-3 py-2 text-sm font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-colors mt-1"
-                                            >
-                                                <LogOut size={18} />
-                                                Sign Out
-                                            </button>
-                                        </div>
+                        {/* Profile or Guest Links */}
+                        {user ? (
+                            <div className="relative ml-2">
+                                <button
+                                    onClick={() => setProfileOpen(!profileOpen)}
+                                    className="flex items-center gap-2 p-1.5 pl-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-blue-500/50 transition-all group"
+                                >
+                                    <div className="text-right hidden sm:block">
+                                        <div className="text-xs font-black text-slate-900 dark:text-white leading-none">{user?.name}</div>
+                                        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">{user?.role}</div>
                                     </div>
-                                </>
-                            )}
-                        </div>
+                                    <UserCircle size={28} className="text-blue-600 dark:text-blue-400" />
+                                    <ChevronDown size={14} className={`text-slate-400 transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
+                                </button>
+
+                                {profileOpen && (
+                                    <>
+                                        <div className="fixed inset-0 z-10" onClick={() => setProfileOpen(false)}></div>
+                                        <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl z-20 overflow-hidden animate-in slide-in-from-top-2 duration-200">
+                                            <div className="p-4 border-b border-slate-100 dark:border-slate-800">
+                                                <div className="text-sm font-black text-slate-900 dark:text-white">{user?.name}</div>
+                                                <div className="text-xs font-medium text-slate-500 truncate">{user?.email}</div>
+                                            </div>
+                                            <div className="p-2">
+                                                <Link
+                                                    to="/settings"
+                                                    onClick={() => setProfileOpen(false)}
+                                                    className="flex items-center gap-3 px-3 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+                                                >
+                                                    <Settings size={18} />
+                                                    Account Settings
+                                                </Link>
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className="w-full flex items-center gap-3 px-3 py-2 text-sm font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 rounded-lg transition-colors mt-1"
+                                                >
+                                                    <LogOut size={18} />
+                                                    Sign Out
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-2 ml-4">
+                                <Link to="/login" className="px-4 py-2 text-sm font-bold text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Sign In</Link>
+                                <Link to="/register" className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-black rounded-xl transition-all shadow-lg shadow-blue-600/20">Join Now</Link>
+                            </div>
+                        )}
 
                         {/* Mobile Menu Toggle */}
                         <div className="flex md:hidden">
@@ -148,8 +155,8 @@ export const Navbar = () => {
                             to={item.path}
                             onClick={() => setIsOpen(false)}
                             className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold ${location.pathname === item.path
-                                    ? 'bg-blue-600 text-white'
-                                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                ? 'bg-blue-600 text-white'
+                                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                                 }`}
                         >
                             <item.icon size={20} />

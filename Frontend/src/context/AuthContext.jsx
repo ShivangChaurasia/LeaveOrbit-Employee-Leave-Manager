@@ -44,11 +44,18 @@ export const AuthProvider = ({ children }) => {
     };
 
     const checkAuthStatus = async () => {
+        const token = localStorage.getItem('accessToken');
+        if (!token) {
+            setLoading(false);
+            return;
+        }
+
         try {
             const response = await api.get('/users/profile');
             setUser(response.data.data.user);
         } catch (error) {
             setUser(null);
+            localStorage.removeItem('accessToken');
         } finally {
             setLoading(false);
         }

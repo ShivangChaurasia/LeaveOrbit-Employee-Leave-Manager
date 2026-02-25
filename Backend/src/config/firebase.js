@@ -1,5 +1,4 @@
 const admin = require('firebase-admin');
-const logger = require('../utils/logger');
 
 let firebaseAdmin;
 
@@ -11,9 +10,9 @@ try {
             privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
         }),
     });
-    logger.info('Firebase Admin initialized successfully');
+    console.log('Firebase Admin SDK initialized');
 } catch (error) {
-    logger.error(`Firebase Admin initialization error: ${error.message}`);
+    console.error('Firebase Admin SDK initialization failed:', error);
 }
 
 module.exports = firebaseAdmin;

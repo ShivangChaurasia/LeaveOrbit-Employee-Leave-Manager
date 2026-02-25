@@ -7,8 +7,6 @@ const router = express.Router();
 router.post('/register', validate(registerSchema), authController.register);
 router.post('/login', validate(loginSchema), authController.login);
 router.post('/firebase', validate(firebaseAuthSchema), authController.firebaseAuth);
-router.post('/magic-link', authController.sendMagicLink);
-router.post('/refresh', authController.refresh);
 router.post('/logout', authController.logout);
 
 module.exports = router;

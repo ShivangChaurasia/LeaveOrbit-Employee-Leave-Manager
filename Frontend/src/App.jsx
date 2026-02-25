@@ -1,9 +1,11 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { ProtectedRoute, PublicRoute } from './components/RouteGuards';
 import { AppLayout } from './layouts/AppLayout';
 
 import { Login } from './features/auth/Login';
+import { Register } from './features/auth/Register';
 import { Onboarding } from './features/onboarding/Onboarding';
 import { Dashboard } from './features/dashboard/Dashboard';
 import { Analytics } from './features/dashboard/Analytics';
@@ -15,33 +17,41 @@ import { UserManagement } from './features/admin/UserManagement';
 import { Settings } from './features/settings/Settings';
 import { Reimbursements } from './features/reimbursements/Reimbursements';
 
+import { PublicLayout } from './layouts/PublicLayout';
+
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Home />} />
-
-          {/* Protected Routes */}
-          <Route element={<ProtectedRoute />}>
-            <Route element={<AppLayout />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/analytics" element={<Analytics />} />
-              <Route path="/leaves" element={<MyLeaves />} />
-              <Route path="/approvals" element={<Approvals />} />
-              <Route path="/reimbursements" element={<Reimbursements />} />
-              <Route path="/users" element={<UserManagement />} />
-              <Route path="/settings" element={<Settings />} />
-              <Route path="/onboarding" element={<Onboarding />} />
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Public Routes */}
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<PublicRoute><Login /></PublicRoute>} />
+              <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
             </Route>
-          </Route>
 
-          {/* Fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<AppLayout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/leaves" element={<MyLeaves />} />
+                <Route path="/approvals" element={<Approvals />} />
+                <Route path="/reimbursements" element={<Reimbursements />} />
+                <Route path="/users" element={<UserManagement />} />
+                <Route path="/settings" element={<Settings />} />
+                <Route path="/onboarding" element={<Onboarding />} />
+              </Route>
+            </Route>
+
+            {/* Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 

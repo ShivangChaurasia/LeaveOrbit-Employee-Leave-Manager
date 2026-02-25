@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
-const logger = require('./utils/logger');
 
 const app = express();
 
@@ -16,7 +14,6 @@ app.use(helmet());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 
 // Logging
 if (process.env.NODE_ENV === 'development') {
@@ -41,7 +38,7 @@ app.get('/health', (req, res) => {
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
-    logger.error(`${err.name}: ${err.message}`);
+    console.error(`${err.name}: ${err.message}`);
     const statusCode = err.statusCode || 500;
     res.status(statusCode).json({
         status: 'error',

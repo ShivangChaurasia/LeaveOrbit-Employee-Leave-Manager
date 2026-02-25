@@ -8,9 +8,13 @@ const api = axios.create({
     },
 });
 
-// Request interceptor for adding tokens (if needed for non-cookie auth)
+// Request interceptor for adding tokens
 api.interceptors.request.use(
     (config) => {
+        const token = localStorage.getItem('accessToken');
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
     },
     (error) => {
@@ -18,24 +22,17 @@ api.interceptors.request.use(
     }
 );
 
-// Response interceptor for token refresh handling
+// Response interceptor for error handling
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
-        const originalRequest = error.config;
-
-        if (error.response?.status === 401 && !originalRequest._retry && !originalRequest.url?.includes('/auth/refresh')) {
-            originalRequest._retry = true;
-            try {
-                await api.post('/auth/refresh');
-                return api(originalRequest);
-            } catch (refreshError) {
-                // Redirect to login or clear auth state
+        // If 401 Unauthorized, clear token and redirect to login
+        if (error.response?.status === 401) {
+            if (window.location.pathname !== '/login' && window.location.pathname !== '/') {
+                localStorage.removeItem('accessToken');
                 window.location.href = '/login';
-                return Promise.reject(refreshError);
             }
         }
-
         return Promise.reject(error);
     }
 );

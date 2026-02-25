@@ -1,4 +1,5 @@
 const User = require('./user.model');
+const userService = require('./user.service');
 const bcrypt = require('bcrypt');
 
 const getProfile = async (req, res, next) => {
@@ -32,7 +33,7 @@ const approveManager = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
-        const manager = await userService.approveManager(id, status, req.user.id);
+        const manager = await userService.approveManager(id, status);
         res.status(200).json({ status: 'success', data: { manager } });
     } catch (error) {
         next(error);

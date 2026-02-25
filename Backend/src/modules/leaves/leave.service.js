@@ -54,7 +54,6 @@ const applyLeave = async (employeeId, leaveData) => {
         endDate: end,
         totalDays,
         reason,
-        auditTrail: [{ status: 'pending', changedBy: employeeId, comment: 'Leave application submitted' }],
     });
 
     return leave;
@@ -106,11 +105,6 @@ const updateLeaveStatus = async (leaveId, status, reviewerId, note) => {
     leave.status = status;
     leave.reviewedBy = reviewerId;
     leave.reviewNote = note;
-    leave.auditTrail.push({
-        status,
-        changedBy: reviewerId,
-        comment: note,
-    });
 
     // If approved, deduct leave balance
     if (status === 'approved') {
@@ -144,11 +138,6 @@ const cancelLeave = async (leaveId, userId) => {
     }
 
     leave.status = 'cancelled';
-    leave.auditTrail.push({
-        status: 'cancelled',
-        changedBy: userId,
-        comment: 'User cancelled the leave request',
-    });
 
     await leave.save();
     return leave;

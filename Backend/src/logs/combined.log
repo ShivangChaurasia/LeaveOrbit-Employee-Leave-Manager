@@ -33,3 +33,59 @@
 {"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T16:32:11.090Z"}
 {"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:32:12.673Z"}
 {"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T16:32:13.106Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:25:41.851Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:25:41.975Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:25:42.966Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:26:03.891Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:26:03.983Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:26:07.098Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:29:52.108Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:29:52.207Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:29:53.042Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:29:54.763Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:29:54.868Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:29:56.633Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:29:56.739Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:29:57.979Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:30:08.607Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:30:08.702Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-02.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:30:09.578Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:30:10.978Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:30:11.085Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:30:11.978Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:30:25.454Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:30:25.550Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-02.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:30:26.252Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:30:40.395Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:30:40.488Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:30:41.330Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:30:42.679Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:30:42.766Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:30:43.627Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:30:45.053Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:30:45.179Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:30:45.934Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:30:47.501Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:30:47.649Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:30:50.556Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:30:54.346Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:30:54.475Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-02.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:30:55.599Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:31:40.349Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:31:40.448Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-02.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:31:41.160Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:32:02.248Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:32:02.337Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:32:03.289Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:32:04.243Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:32:04.332Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:32:05.009Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:32:06.320Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:32:06.407Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-00.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:32:07.222Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:34:08.475Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:34:08.586Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-02.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:34:09.624Z"}
+{"level":"info","message":"Firebase Admin initialized successfully","timestamp":"2026-02-25T21:35:04.749Z"}
+{"level":"info","message":"Server running in development mode on port 5000","timestamp":"2026-02-25T21:35:04.875Z"}
+{"level":"info","message":"MongoDB Connected: ac-zyjz4fg-shard-00-01.wgwwa9h.mongodb.net","timestamp":"2026-02-25T21:35:05.618Z"}

@@ -44,18 +44,6 @@ const leaveSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
-    auditTrail: [{
-        status: String,
-        changedBy: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-        },
-        comment: String,
-        timestamp: {
-            type: Date,
-            default: Date.now,
-        },
-    }],
 }, {
     timestamps: true,
 });

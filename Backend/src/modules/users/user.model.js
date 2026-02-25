@@ -38,24 +38,6 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 20,
     },
-    isActive: {
-        type: Boolean,
-        default: true,
-    },
-    refreshToken: {
-        type: String,
-        select: false,
-    },
-    failedLoginAttempts: {
-        type: Number,
-        default: 0,
-    },
-    lockUntil: {
-        type: Date,
-    },
-    lastLogin: {
-        type: Date,
-    },
     onboardingCompleted: {
         type: Boolean,
         default: false,
@@ -63,7 +45,7 @@ const userSchema = new mongoose.Schema({
     managerApprovalStatus: {
         type: String,
         enum: ['pending', 'approved', 'rejected'],
-        default: 'pending',
+        default: 'approved', // Default to approved for employees; managers will set to pending in onboarding
     },
 }, {
     timestamps: true,
