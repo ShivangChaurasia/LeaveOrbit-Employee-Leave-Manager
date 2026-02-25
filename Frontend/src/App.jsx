@@ -10,10 +10,10 @@ import { Analytics } from './features/dashboard/Analytics';
 import { MyLeaves } from './features/leaves/MyLeaves';
 
 import { Approvals } from './features/leaves/Approvals';
-
-// Pages
-const Users = () => <div className="text-white">Employee Directory (WIP)</div>;
-const Settings = () => <div className="text-white">Settings Page (WIP)</div>;
+import { Home } from './features/home/Home';
+import { UserManagement } from './features/admin/UserManagement';
+import { Settings } from './features/settings/Settings';
+import { Reimbursements } from './features/reimbursements/Reimbursements';
 
 function App() {
   return (
@@ -21,9 +21,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           {/* Public Routes */}
-          <Route element={<PublicRoute />}>
-            <Route path="/login" element={<Login />} />
-          </Route>
+          <Route path="/" element={<Home />} />
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>
@@ -32,13 +30,15 @@ function App() {
               <Route path="/analytics" element={<Analytics />} />
               <Route path="/leaves" element={<MyLeaves />} />
               <Route path="/approvals" element={<Approvals />} />
-              <Route path="/users" element={<Users />} />
+              <Route path="/reimbursements" element={<Reimbursements />} />
+              <Route path="/users" element={<UserManagement />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="/onboarding" element={<Onboarding />} />
             </Route>
           </Route>
 
           {/* Fallback */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

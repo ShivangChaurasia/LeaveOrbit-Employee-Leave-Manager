@@ -8,8 +8,11 @@ const logger = require('./utils/logger');
 const app = express();
 
 // Middleware & Security
-const setupSecurity = require('./config/security');
-setupSecurity(app);
+app.use(cors({
+    origin: ['http://localhost:5173', 'http://localhost:5174'],
+    credentials: true
+}));
+app.use(helmet());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -24,10 +27,12 @@ if (process.env.NODE_ENV === 'development') {
 const authRoutes = require('./modules/auth/auth.routes');
 const userRoutes = require('./modules/users/user.routes');
 const leaveRoutes = require('./modules/leaves/leave.routes');
+const reimbursementRoutes = require('./modules/reimbursements/reimbursement.routes');
 
-app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/users', userRoutes);
-app.use('/api/v1/leaves', leaveRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/leaves', leaveRoutes);
+app.use('/api/reimbursements', reimbursementRoutes);
 
 // Basic Route
 app.get('/health', (req, res) => {

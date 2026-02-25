@@ -2,25 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
+@layer base {
+  :root {
+    --foreground-rgb: 15, 23, 42;
+    --background-start-rgb: 255, 255, 255;
+    --background-end-rgb: 248, 250, 252;
+  }
 
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #242424;
+  [data-theme='dark'] {
+    --foreground-rgb: 248, 250, 252;
+    --background-start-rgb: 2, 6, 23;
+    --background-end-rgb: 15, 23, 42;
+  }
+}
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+@layer utilities {
+  .animate-gradient {
+    background-size: 200% 200%;
+    animation: gradient 8s ease infinite;
+  }
+
+  .animate-shimmer-fast {
+    animation: shimmer 1.5s infinite linear;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    background-size: 200% 100%;
+  }
+
+  .animate-grow-up-1 { animation: growUp 2s infinite ease-in-out; }
+  .animate-grow-up-2 { animation: growUp 2s infinite ease-in-out 0.3s; }
+  .animate-grow-up-3 { animation: growUp 2s infinite ease-in-out 0.6s; }
+  .animate-ping-slow { animation: ping 3s cubic-bezier(0, 0, 0.2, 1) infinite; }
+  .animate-slide-right { animation: slideRight 4s linear infinite; }
+  .animate-slide-right-slow { animation: slideRight 6s linear infinite; }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes growUp {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1); }
+  }
+
+  @keyframes slideRight {
+    0% { transform: translateX(-100%) scaleX(1.5); }
+    100% { transform: translateX(100%) scaleX(1.5); }
+  }
+
+  .calendar-picker-indicator-invert::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+  }
+  
+  .dark .calendar-picker-indicator-invert::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
 }
 
 body {
-    margin: 0;
-    display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
+  @apply bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300;
+  margin: 0;
+  min-height: 100vh;
 }

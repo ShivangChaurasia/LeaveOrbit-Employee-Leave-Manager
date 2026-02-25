@@ -1,3 +1,8 @@
+// Fix: Node v22 + OpenSSL 3.x TLS compatibility for Firebase Admin SDK
+const tls = require('tls');
+tls.DEFAULT_MIN_VERSION = 'TLSv1.2';
+tls.DEFAULT_MAX_VERSION = 'TLSv1.3';
+
 require('dotenv').config();
 const app = require('./src/app');
 const connectDB = require('./src/config/db');
@@ -5,6 +10,7 @@ const logger = require('./src/utils/logger');
 
 // Connect to Database
 connectDB();
+
 
 const PORT = process.env.PORT || 5000;
 

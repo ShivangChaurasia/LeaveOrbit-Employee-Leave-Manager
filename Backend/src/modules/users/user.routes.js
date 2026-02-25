@@ -7,7 +7,10 @@ const router = express.Router();
 router.use(protect);
 
 router.get('/profile', userController.getProfile);
+router.patch('/profile', userController.updateProfile);
+router.post('/password', userController.changePassword);
 router.post('/onboarding', userController.completeOnboarding);
+
 
 // Admin only routes
 router.get('/', authorize('admin'), userController.getAllUsers);

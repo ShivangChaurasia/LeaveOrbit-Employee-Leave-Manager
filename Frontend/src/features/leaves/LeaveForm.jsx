@@ -41,31 +41,28 @@ export const LeaveForm = ({ onSuccess }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label className="block text-sm font-medium text-slate-400 mb-2">Start Date</label>
-                    <div className="relative">
-                        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-                        <input
-                            type="date"
-                            value={formData.startDate}
-                            onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                            className="w-full bg-slate-800 border border-slate-700 rounded-lg py-2 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
-                    </div>
+                    <input
+                        type="date"
+                        value={formData.startDate}
+                        min={new Date().toISOString().split('T')[0]}
+                        onChange={(e) => setFormData({ ...formData, startDate: e.target.value, endDate: '' })}
+                        className="w-full bg-slate-800 border border-slate-700 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                        required
+                    />
                 </div>
                 <div>
                     <label className="block text-sm font-medium text-slate-400 mb-2">End Date</label>
-                    <div className="relative">
-                        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
-                        <input
-                            type="date"
-                            value={formData.endDate}
-                            onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                            className="w-full bg-slate-800 border border-slate-700 rounded-lg py-2 pl-10 pr-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            required
-                        />
-                    </div>
+                    <input
+                        type="date"
+                        value={formData.endDate}
+                        min={formData.startDate || new Date().toISOString().split('T')[0]}
+                        onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
+                        className="w-full bg-slate-800 border border-slate-700 rounded-lg py-2.5 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                        required
+                    />
                 </div>
             </div>
+
 
             <div>
                 <label className="block text-sm font-medium text-slate-400 mb-2">Leave Type</label>
