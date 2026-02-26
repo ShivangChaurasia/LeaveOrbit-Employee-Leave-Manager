@@ -48,6 +48,15 @@ const cancelLeave = async (req, res, next) => {
     }
 };
 
+const getDepartmentLeaves = async (req, res, next) => {
+    try {
+        const leaves = await leaveService.getDepartmentLeaves(req.user.id);
+        res.status(200).json({ status: 'success', data: { leaves } });
+    } catch (error) {
+        next(error);
+    }
+};
+
 const getAllLeaves = async (req, res, next) => {
     try {
         const leaves = await leaveService.getAllLeaves(req.query);
@@ -61,6 +70,7 @@ module.exports = {
     applyLeave,
     getMyLeaves,
     getPendingLeaves,
+    getDepartmentLeaves,
     updateStatus,
     cancelLeave,
     getAllLeaves,

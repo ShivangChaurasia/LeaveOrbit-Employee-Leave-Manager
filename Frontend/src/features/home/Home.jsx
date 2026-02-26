@@ -131,12 +131,12 @@ export const Home = () => {
                                 <div className={`w-14 h-14 rounded-2xl bg-${feature.color}-600/10 flex items-center justify-center text-${feature.color}-400 mb-8 group-hover:scale-110 transition-transform relative z-10`}>
                                     <feature.icon size={26} />
                                 </div>
-                                <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-3 tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{feature.title}</h3>
-                                <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-medium mb-6 opacity-90">{feature.description}</p>
+                                <h3 className="text-lg font-bold text-white mb-3 tracking-tight group-hover:text-blue-400 transition-colors">{feature.title}</h3>
+                                <p className="text-sm text-slate-300 leading-relaxed font-medium mb-6 opacity-90">{feature.description}</p>
                                 <ul className="space-y-2">
                                     {['System Sync', 'Direct Approvals'].map(item => (
-                                        <li key={item} className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                                            <CheckCircle2 size={12} className="text-blue-600" />
+                                        <li key={item} className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                                            <CheckCircle2 size={12} className="text-blue-500" />
                                             {item}
                                         </li>
                                     ))}

@@ -26,8 +26,11 @@ export const Analytics = () => {
     useEffect(() => {
         const fetchAnalytics = async () => {
             try {
-                // Fetch Leaves
-                const leaveEndpoint = user.role === 'admin' ? '/leaves/all' : '/leaves';
+                // Fetch Leaves based on Role
+                let leaveEndpoint = '/leaves/my';
+                if (user.role === 'admin') leaveEndpoint = '/leaves/all';
+                else if (user.role === 'manager') leaveEndpoint = '/leaves/department';
+
                 const leaveResponse = await api.get(leaveEndpoint);
                 const leaves = leaveResponse.data.data.leaves;
 

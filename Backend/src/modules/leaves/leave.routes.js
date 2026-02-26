@@ -12,9 +12,11 @@ router.delete('/:id', leaveController.cancelLeave);
 
 // Manager and Admin routes
 router.get('/pending', authorize('manager', 'admin'), leaveController.getPendingLeaves);
+router.get('/department', authorize('manager'), leaveController.getDepartmentLeaves);
 router.patch('/:id/status', authorize('manager', 'admin'), leaveController.updateStatus);
 
 // Admin only
+router.get('/all', authorize('admin'), leaveController.getAllLeaves);
 router.get('/', authorize('admin'), leaveController.getAllLeaves);
 
 module.exports = router;

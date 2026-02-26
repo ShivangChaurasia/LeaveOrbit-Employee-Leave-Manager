@@ -178,14 +178,33 @@ const cancelLeave = async (leaveId, userId) => {
     return leave;
 };
 
+const getDepartmentLeaves = async (managerId) => {
+    const manager = await User.findById(managerId);
+    if (!manager || manager.role !== 'manager') {
+        const error = new Error('Unauthorized');
+        error.statusCode = 403;
+        throw error;
+    }
+
+    return await Leave.find()
+        .populate({
+            path: 'employee',
+            match: { department: manager.department }
+        })
+        .lean()
+        .then(leaves => leaves.filter(l => l.employee !== null))
+        .then(leaves => leaves.sort((a, b) => new Date(b.startDate) - new Date(a.startDate)));
+};
+
 const getAllLeaves = async (filters = {}) => {
-    return await Leave.find(filters).populate('employee', 'name email department').sort({ startDate: -1 });
+    return await Leave.find(filters).populate('employee', 'name email department role').sort({ startDate: -1 });
 };
 
 module.exports = {
     applyLeave,
     getMyLeaves,
     getPendingLeavesForApproval,
+    getDepartmentLeaves,
     updateLeaveStatus,
     cancelLeave,
     getAllLeaves,
