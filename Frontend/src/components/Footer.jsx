@@ -18,10 +18,10 @@ export const Footer = () => {
                             Simplifying time-off management for modern high-performance teams with intelligent workflows and real-time insights.
                         </p>
                         <div className="flex items-center gap-3">
-                            <a href="https:
+                            <a href="https://github.com/shiva17ng" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700 transition-all">
                                 <Github size={18} />
                             </a>
-                            <a href="https:
+                            <a href="https://linkedin.com/in/shiva17ng" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/30 transition-all">
                                 <Linkedin size={18} />
                             </a>
                             <a href="mailto:shiva17ng@gmail.com" className="w-10 h-10 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/30 transition-all">

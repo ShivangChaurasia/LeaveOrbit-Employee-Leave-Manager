@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const app = express();
 app.use(cors({
-    origin: ['http:
+    origin: [process.env.CLIENT_URL, 'http://localhost:5173', 'http://localhost:5174'].filter(Boolean),
     credentials: true
 }));
 app.use(helmet());
