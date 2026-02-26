@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
 const pendingUserSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -34,6 +33,10 @@ const pendingUserSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    leaveBalance: {
+        type: Number,
+        default: 20,
+    },
     onboardingCompleted: {
         type: Boolean,
         default: false,
@@ -51,8 +54,6 @@ const pendingUserSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
-
-// Encrypt password using bcrypt
 pendingUserSchema.pre('save', async function () {
     if (!this.isModified('password')) {
         return;
@@ -60,5 +61,7 @@ pendingUserSchema.pre('save', async function () {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
 });
-
+pendingUserSchema.methods.matchPassword = async function (enteredPassword) {
+    return await bcrypt.compare(enteredPassword, this.password);
+};
 module.exports = mongoose.model('PendingUser', pendingUserSchema);

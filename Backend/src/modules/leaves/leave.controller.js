@@ -1,5 +1,4 @@
 const leaveService = require('./leave.service');
-
 const applyLeave = async (req, res, next) => {
     try {
         const leave = await leaveService.applyLeave(req.user.id, req.body);
@@ -8,7 +7,6 @@ const applyLeave = async (req, res, next) => {
         next(error);
     }
 };
-
 const getMyLeaves = async (req, res, next) => {
     try {
         const leaves = await leaveService.getMyLeaves(req.user.id);
@@ -17,7 +15,6 @@ const getMyLeaves = async (req, res, next) => {
         next(error);
     }
 };
-
 const getPendingLeaves = async (req, res, next) => {
     try {
         const leaves = await leaveService.getPendingLeavesForApproval(req.user.id);
@@ -26,7 +23,6 @@ const getPendingLeaves = async (req, res, next) => {
         next(error);
     }
 };
-
 const updateStatus = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -37,7 +33,6 @@ const updateStatus = async (req, res, next) => {
         next(error);
     }
 };
-
 const cancelLeave = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -47,7 +42,6 @@ const cancelLeave = async (req, res, next) => {
         next(error);
     }
 };
-
 const getDepartmentLeaves = async (req, res, next) => {
     try {
         const leaves = await leaveService.getDepartmentLeaves(req.user.id);
@@ -56,7 +50,6 @@ const getDepartmentLeaves = async (req, res, next) => {
         next(error);
     }
 };
-
 const getAllLeaves = async (req, res, next) => {
     try {
         const leaves = await leaveService.getAllLeaves(req.query);
@@ -65,7 +58,6 @@ const getAllLeaves = async (req, res, next) => {
         next(error);
     }
 };
-
 module.exports = {
     applyLeave,
     getMyLeaves,

@@ -1,16 +1,11 @@
 const express = require('express');
 const reimbursementController = require('./reimbursement.controller');
 const { protect, authorize } = require('../../middleware/auth.middleware');
-
 const router = express.Router();
-
 router.use(protect);
-
 router.get('/', reimbursementController.getMyReimbursements);
 router.post('/', reimbursementController.createReimbursement);
-
-// Admin only
+router.get('/pending', authorize('admin'), reimbursementController.getPendingReimbursements);
 router.get('/all', authorize('admin'), reimbursementController.getAllReimbursements);
 router.patch('/:id/status', authorize('admin'), reimbursementController.updateStatus);
-
 module.exports = router;

@@ -1,6 +1,5 @@
 const winston = require('winston');
 const path = require('path');
-
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
@@ -17,11 +16,9 @@ const logger = winston.createLogger({
         }),
     ],
 });
-
 if (process.env.NODE_ENV !== 'production') {
     logger.add(new winston.transports.Console({
         format: winston.format.simple(),
     }));
 }
-
 module.exports = logger;

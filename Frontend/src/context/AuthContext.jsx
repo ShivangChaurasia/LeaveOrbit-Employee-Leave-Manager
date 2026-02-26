@@ -2,21 +2,16 @@ import { createContext, useContext, useState, useEffect } from 'react';
 import api from '../services/api';
 import { auth, googleProvider } from '../services/firebase';
 import { signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth';
-
 const AuthContext = createContext();
-
 export const useAuth = () => useContext(AuthContext);
-
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showSuccess, setShowSuccess] = useState(false);
-
     const triggerSuccess = () => {
         setShowSuccess(true);
         setTimeout(() => setShowSuccess(false), 3000);
     };
-
     const login = async (email, password) => {
         const response = await api.post('/auth/login', { email, password });
         setUser(response.data.data.user);
@@ -24,13 +19,11 @@ export const AuthProvider = ({ children }) => {
         triggerSuccess();
         return response.data.data.user;
     };
-
     const register = async (userData) => {
         const response = await api.post('/auth/register', userData);
         triggerSuccess();
         return response.data.data.user;
     };
-
     const firebaseLogin = async (idToken) => {
         const response = await api.post('/auth/firebase', { idToken });
         setUser(response.data.data.user);
@@ -38,7 +31,6 @@ export const AuthProvider = ({ children }) => {
         triggerSuccess();
         return response.data.data.user;
     };
-
     const googleLogin = async () => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
@@ -49,7 +41,6 @@ export const AuthProvider = ({ children }) => {
             throw error;
         }
     };
-
     const logout = async () => {
         try {
             await api.post('/auth/logout');
@@ -60,14 +51,12 @@ export const AuthProvider = ({ children }) => {
         localStorage.removeItem('accessToken');
         await signOut(auth);
     };
-
     const checkAuthStatus = async () => {
         const token = localStorage.getItem('accessToken');
         if (!token) {
             setLoading(false);
             return;
         }
-
         try {
             const response = await api.get('/users/profile');
             setUser(response.data.data.user);
@@ -78,11 +67,9 @@ export const AuthProvider = ({ children }) => {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         checkAuthStatus();
     }, []);
-
     const value = {
         user,
         loading,
@@ -96,7 +83,6 @@ export const AuthProvider = ({ children }) => {
         setUser,
         checkAuthStatus,
     };
-
     return (
         <AuthContext.Provider value={value}>
             {!loading && children}

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const leaveSchema = new mongoose.Schema({
     employee: {
         type: mongoose.Schema.Types.ObjectId,
@@ -47,9 +46,6 @@ const leaveSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
-
-// Compound index for efficient searching
 leaveSchema.index({ employee: 1, status: 1 });
 leaveSchema.index({ startDate: 1, endDate: 1 });
-
 module.exports = mongoose.model('Leave', leaveSchema);

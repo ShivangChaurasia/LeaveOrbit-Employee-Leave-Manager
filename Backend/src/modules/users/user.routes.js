@@ -1,21 +1,14 @@
 const express = require('express');
 const userController = require('./user.controller');
 const { protect, authorize } = require('../../middleware/auth.middleware');
-
 const router = express.Router();
-
 router.use(protect);
-
 router.get('/profile', userController.getProfile);
 router.patch('/profile', userController.updateProfile);
 router.post('/password', userController.changePassword);
 router.post('/onboarding', userController.completeOnboarding);
-
-
-// Admin only routes
 router.get('/', authorize('admin'), userController.getAllUsers);
 router.patch('/:id/approve-manager', authorize('admin'), userController.approveManager);
 router.patch('/:id/approve-account', authorize('admin'), userController.approveAccount);
 router.delete('/:id', authorize('admin'), userController.deleteUser);
-
 module.exports = router;

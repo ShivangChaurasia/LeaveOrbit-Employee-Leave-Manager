@@ -1,7 +1,5 @@
 const admin = require('firebase-admin');
-
 let firebaseAdmin;
-
 try {
     firebaseAdmin = admin.initializeApp({
         credential: admin.credential.cert({
@@ -14,5 +12,4 @@ try {
 } catch (error) {
     console.error('Firebase Admin SDK initialization failed:', error);
 }
-
 module.exports = firebaseAdmin;

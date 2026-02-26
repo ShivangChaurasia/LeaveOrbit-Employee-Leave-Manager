@@ -12,18 +12,15 @@ import {
     UserX,
     Clock
 } from 'lucide-react';
-
 export const AccountRequests = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [search, setSearch] = useState('');
-
     const fetchRequests = async () => {
         try {
             setLoading(true);
             const response = await api.get('/users');
-            // Filter users who are pending approval
             const pendingUsers = response.data.data.users.filter(u => u.accountStatus === 'pending');
             setUsers(pendingUsers);
         } catch (err) {
@@ -33,11 +30,9 @@ export const AccountRequests = () => {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         fetchRequests();
     }, []);
-
     const handleApproval = async (userId, status) => {
         try {
             await api.patch(`/users/${userId}/approve-account`, { status });
@@ -47,18 +42,15 @@ export const AccountRequests = () => {
             console.error(err);
         }
     };
-
     const filteredUsers = users.filter(user =>
         user.name?.toLowerCase().includes(search.toLowerCase()) ||
         user.email?.toLowerCase().includes(search.toLowerCase())
     );
-
     if (loading) return (
         <div className="flex items-center justify-center min-h-[400px]">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
         </div>
     );
-
     return (
         <div className="space-y-8 animate-in fade-in duration-700">
             <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -79,13 +71,11 @@ export const AccountRequests = () => {
                     </div>
                 </div>
             </header>
-
             {error && (
                 <div className="bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-900 text-rose-600 p-4 rounded-xl text-sm font-medium">
                     {error}
                 </div>
             )}
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredUsers.map((user) => (
                     <div key={user._id} className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/5">
@@ -97,7 +87,6 @@ export const AccountRequests = () => {
                                 Pending {user.role}
                             </div>
                         </div>
-
                         <div className="space-y-4">
                             <div>
                                 <h3 className="text-lg font-bold text-slate-900 dark:text-white truncate">{user.name}</h3>
@@ -110,7 +99,6 @@ export const AccountRequests = () => {
                                     <span className="text-sm font-medium truncate">{user.department || 'No department'}</span>
                                 </div>
                             </div>
-
                             <div className="pt-6 border-t border-slate-100 dark:border-slate-800 flex gap-3">
                                 <button
                                     onClick={() => handleApproval(user._id, 'approved')}
@@ -131,7 +119,6 @@ export const AccountRequests = () => {
                     </div>
                 ))}
             </div>
-
             {filteredUsers.length === 0 && (
                 <div className="text-center py-20 bg-slate-50 dark:bg-slate-900/50 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-800">
                     <CheckCircle2 className="mx-auto text-emerald-500/20 mb-4" size={48} />

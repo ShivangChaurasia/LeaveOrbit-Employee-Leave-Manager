@@ -14,7 +14,6 @@ import {
     Cell,
     Legend
 } from 'recharts';
-
 export const Analytics = () => {
     const { user } = useAuth();
     const [data, setData] = useState({
@@ -22,27 +21,20 @@ export const Analytics = () => {
         ratios: [],
         reimbursements: []
     });
-
     useEffect(() => {
         const fetchAnalytics = async () => {
             try {
-                // Fetch Leaves based on Role
                 let leaveEndpoint = '/leaves/my';
                 if (user.role === 'admin') leaveEndpoint = '/leaves/all';
                 else if (user.role === 'manager') leaveEndpoint = '/leaves/department';
-
                 const leaveResponse = await api.get(leaveEndpoint);
                 const leaves = leaveResponse.data.data.leaves;
-
-                // Process Trends
                 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
                 const trends = months.map(m => ({ name: m, count: 0 }));
                 leaves.forEach(l => {
                     const month = new Date(l.startDate).getMonth();
                     trends[month].count++;
                 });
-
-                // Process Ratios
                 const approved = leaves.filter(l => l.status === 'approved').length;
                 const rejected = leaves.filter(l => l.status === 'rejected').length;
                 const pending = leaves.filter(l => l.status === 'pending').length;
@@ -51,21 +43,16 @@ export const Analytics = () => {
                     { name: 'Rejected', value: rejected, color: '#f43f5e' },
                     { name: 'Pending', value: pending, color: '#f59e0b' },
                 ];
-
-                // Fetch Reimbursements for Admin
                 let reimbursementData = [];
                 if (user.role === 'admin') {
                     const reimbResponse = await api.get('/reimbursements/all');
                     const reimbs = reimbResponse.data.data.reimbursements;
-
-                    // Group by category
                     const categories = ['Travel', 'Food', 'Office Supplies', 'Medical', 'Other'];
                     reimbursementData = categories.map(cat => ({
                         name: cat,
                         value: reimbs.filter(r => r.category === cat).reduce((sum, r) => sum + r.amount, 0)
                     }));
                 }
-
                 setData({ trends, ratios, reimbursements: reimbursementData });
             } catch (error) {
                 console.error('Failed to fetch analytics', error);
@@ -73,18 +60,15 @@ export const Analytics = () => {
         };
         fetchAnalytics();
     }, [user.role]);
-
     const COLORS = ['#3b82f6', '#8b5cf6', '#ec4899', '#f97316', '#10b981'];
-
     return (
         <div className="space-y-8 pb-12">
             <header>
                 <h1 className="text-3xl font-black text-slate-900 dark:text-white uppercase tracking-tight">System Analytics</h1>
                 <p className="text-slate-500 font-medium">Visualization of {user.role === 'admin' ? 'organization' : 'personal'} productivity and expenses.</p>
             </header>
-
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Monthly Leave Trends */}
+                {}
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl h-[450px] shadow-sm">
                     <h2 className="text-lg font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-[10px] bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full w-fit">Monthly Trends</h2>
                     <ResponsiveContainer width="100%" height="85%">
@@ -105,8 +89,7 @@ export const Analytics = () => {
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
-
-                {/* Approval Distribution */}
+                {}
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl h-[450px] shadow-sm">
                     <h2 className="text-lg font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-[10px] bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full w-fit">Decision Ratios</h2>
                     <ResponsiveContainer width="100%" height="75%">
@@ -129,9 +112,7 @@ export const Analytics = () => {
                         </PieChart>
                     </ResponsiveContainer>
                 </div>
-
                 {user.role === 'admin' && (
-                    /* Reimbursement Totals for Admin */
                     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 rounded-3xl h-[450px] shadow-sm lg:col-span-2">
                         <h2 className="text-lg font-black text-slate-900 dark:text-white mb-6 uppercase tracking-widest text-[10px] bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full w-fit">Financial Distribution</h2>
                         <ResponsiveContainer width="100%" height="85%">

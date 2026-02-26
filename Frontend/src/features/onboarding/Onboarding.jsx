@@ -3,7 +3,6 @@ import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import { UserPlus, Building, Briefcase } from 'lucide-react';
-
 export const Onboarding = () => {
     const { user, setUser, checkAuthStatus } = useAuth();
     const [department, setDepartment] = useState('');
@@ -13,7 +12,6 @@ export const Onboarding = () => {
     const [error, setError] = useState('');
     const [submitted, setSubmitted] = useState(false);
     const navigate = useNavigate();
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -22,7 +20,6 @@ export const Onboarding = () => {
             const response = await api.post('/users/onboarding', { department, name, role });
             const updatedUser = response.data.data.user;
             setUser(updatedUser);
-
             if (updatedUser.accountStatus === 'pending' || updatedUser.managerApprovalStatus === 'pending') {
                 setSubmitted(true);
             } else {
@@ -34,9 +31,7 @@ export const Onboarding = () => {
             setLoading(false);
         }
     };
-
     const isPending = user?.accountStatus === 'pending';
-
     if (submitted || (user?.onboardingCompleted && isPending)) {
         return (
             <div className="max-w-xl mx-auto mt-12 px-4">
@@ -65,7 +60,6 @@ export const Onboarding = () => {
             </div>
         );
     }
-
     return (
         <div className="max-w-xl mx-auto mt-12 text-slate-100">
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-xl">
@@ -78,13 +72,11 @@ export const Onboarding = () => {
                         <p className="text-slate-400">Let's get your profile set up</p>
                     </div>
                 </div>
-
                 {error && (
                     <div className="bg-red-900/20 border border-red-900 text-red-400 p-3 rounded-lg mb-6 text-sm">
                         {error}
                     </div>
                 )}
-
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label className="block text-sm font-medium text-slate-400 mb-2">Full Name</label>
@@ -96,7 +88,6 @@ export const Onboarding = () => {
                             required
                         />
                     </div>
-
                     <div>
                         <label className="block text-sm font-medium text-slate-400 mb-2">Department</label>
                         <div className="relative">
@@ -116,7 +107,6 @@ export const Onboarding = () => {
                             </select>
                         </div>
                     </div>
-
                     <div>
                         <label className="block text-sm font-medium text-slate-400 mb-2">Request Role</label>
                         <div className="relative">
@@ -132,7 +122,6 @@ export const Onboarding = () => {
                             </select>
                         </div>
                     </div>
-
                     <button
                         type="submit"
                         disabled={loading}

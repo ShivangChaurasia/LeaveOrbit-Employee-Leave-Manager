@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import api from '../../services/api';
 import { Send, Calendar, Clock, AlertCircle } from 'lucide-react';
-
 export const LeaveForm = ({ onSuccess }) => {
     const [formData, setFormData] = useState({
         startDate: '',
@@ -11,7 +10,6 @@ export const LeaveForm = ({ onSuccess }) => {
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -26,18 +24,15 @@ export const LeaveForm = ({ onSuccess }) => {
             setLoading(false);
         }
     };
-
     return (
         <form onSubmit={handleSubmit} className="space-y-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none">
             <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Request Leave</h2>
-
             {error && (
                 <div className="bg-red-900/20 border border-red-900 text-red-400 p-3 rounded-lg text-sm flex items-center gap-2">
                     <AlertCircle size={16} />
                     {error}
                 </div>
             )}
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Start Date</label>
@@ -62,8 +57,6 @@ export const LeaveForm = ({ onSuccess }) => {
                     />
                 </div>
             </div>
-
-
             <div>
                 <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Leave Type</label>
                 <select
@@ -80,7 +73,6 @@ export const LeaveForm = ({ onSuccess }) => {
                     <option value="Loss of Pay">Loss of Pay</option>
                 </select>
             </div>
-
             <div>
                 <label className="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">Reason</label>
                 <textarea
@@ -91,7 +83,6 @@ export const LeaveForm = ({ onSuccess }) => {
                     required
                 ></textarea>
             </div>
-
             <button
                 type="submit"
                 disabled={loading}

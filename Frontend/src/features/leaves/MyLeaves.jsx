@@ -10,11 +10,9 @@ import {
     Search,
     Filter
 } from 'lucide-react';
-
 export const MyLeaves = () => {
     const [leaves, setLeaves] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const fetchLeaves = async () => {
         try {
             const response = await api.get('/leaves/my');
@@ -25,11 +23,9 @@ export const MyLeaves = () => {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         fetchLeaves();
     }, []);
-
     const handleCancel = async (id) => {
         if (!confirm('Are you sure you want to cancel this leave request?')) return;
         try {
@@ -39,7 +35,6 @@ export const MyLeaves = () => {
             alert(error.response?.data?.message || 'Failed to cancel leave');
         }
     };
-
     const getStatusStyle = (status) => {
         switch (status) {
             case 'approved': return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
@@ -48,7 +43,6 @@ export const MyLeaves = () => {
             default: return 'bg-slate-500/10 text-slate-500 border-slate-500/20';
         }
     };
-
     const getStatusIcon = (status) => {
         switch (status) {
             case 'approved': return <CheckCircle2 size={16} />;
@@ -57,7 +51,6 @@ export const MyLeaves = () => {
             default: return null;
         }
     };
-
     return (
         <div className="space-y-8">
             <header className="flex justify-between items-center">
@@ -66,12 +59,10 @@ export const MyLeaves = () => {
                     <p className="text-slate-600 dark:text-slate-400">Track and manage your leave requests</p>
                 </div>
             </header>
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-1">
                     <LeaveForm onSuccess={fetchLeaves} />
                 </div>
-
                 <div className="lg:col-span-2 space-y-4">
                     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-none transition-all">
                         <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center gap-4">
@@ -87,7 +78,6 @@ export const MyLeaves = () => {
                                 <Filter size={18} />
                             </button>
                         </div>
-
                         <div className="divide-y divide-slate-100 dark:divide-slate-800">
                             {loading ? (
                                 <div className="p-12 text-center text-slate-500 italic">Loading your leaves...</div>
@@ -121,7 +111,6 @@ export const MyLeaves = () => {
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div className="flex items-center gap-4">
                                             {leave.status === 'pending' && (
                                                 <button
@@ -146,5 +135,4 @@ export const MyLeaves = () => {
         </div>
     );
 };
-
 const cn = (...inputs) => inputs.filter(Boolean).join(' ');

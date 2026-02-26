@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -18,7 +17,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: function () { return this.provider === 'local'; },
-        select: false, // Don't return password by default
+        select: false,
     },
     provider: {
         type: String,
@@ -55,8 +54,6 @@ const userSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
-
-// Encrypt password using bcrypt
 userSchema.pre('save', async function () {
     if (!this.isModified('password')) {
         return;
@@ -64,10 +61,7 @@ userSchema.pre('save', async function () {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
 });
-
-// Match user entered password to hashed password in database
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
-
 module.exports = mongoose.model('User', userSchema);

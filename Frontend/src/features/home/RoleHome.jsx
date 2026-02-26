@@ -2,10 +2,8 @@ import { useAuth } from '../../context/AuthContext';
 import { motion } from 'framer-motion';
 import { LayoutDashboard, Users, Clock, Calendar, ShieldCheck, TrendingUp, Bell, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
 export const RoleHome = () => {
     const { user } = useAuth();
-
     const getRoleContent = () => {
         switch (user?.role) {
             case 'admin':
@@ -28,7 +26,7 @@ export const RoleHome = () => {
                         { icon: Users, title: 'Capacity Planning', desc: 'Ensure department coverage remains optimal during peak seasons.' }
                     ]
                 };
-            default: // employee
+            default:
                 return {
                     title: 'Employee Self-Service Portal',
                     subtitle: 'Quick access to your leave benefits and personal attendance records.',
@@ -40,12 +38,10 @@ export const RoleHome = () => {
                 };
         }
     };
-
     const content = getRoleContent();
-
     return (
         <div className="min-h-[calc(100vh-64px)] bg-transparent text-slate-900 dark:text-slate-200 font-inter">
-            {/* Hero Section */}
+            {}
             <section className="relative pt-16 pb-20 overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <motion.div
@@ -78,8 +74,7 @@ export const RoleHome = () => {
                     </motion.div>
                 </div>
             </section>
-
-            {/* Role Features */}
+            {}
             <section className="py-20 bg-slate-100/50 dark:bg-slate-900/30">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

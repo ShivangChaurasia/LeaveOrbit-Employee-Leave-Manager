@@ -13,14 +13,11 @@ import {
 import { useState } from 'react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-
 const cn = (...inputs) => twMerge(clsx(inputs));
-
 export const Sidebar = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(true);
-
     const menuItems = [
         { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard', roles: ['employee', 'manager', 'admin'] },
         { icon: LayoutDashboard, label: 'Analytics', path: '/analytics', roles: ['admin'] },
@@ -29,12 +26,10 @@ export const Sidebar = () => {
         { icon: Users, label: 'Employee Directory', path: '/users', roles: ['admin'] },
         { icon: Settings, label: 'Settings', path: '/settings', roles: ['employee', 'manager', 'admin'] },
     ].filter(item => item.roles.includes(user?.role));
-
     const handleLogout = async () => {
         await logout();
         navigate('/login');
     };
-
     return (
         <div className={cn(
             "bg-slate-900 text-white min-h-screen transition-all duration-300 flex flex-col",
@@ -46,7 +41,6 @@ export const Sidebar = () => {
                     {isOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
             </div>
-
             <nav className="flex-1 mt-6">
                 {menuItems.map((item) => (
                     <button
@@ -59,7 +53,6 @@ export const Sidebar = () => {
                     </button>
                 ))}
             </nav>
-
             <div className="p-4 border-t border-slate-800">
                 <button
                     onClick={handleLogout}

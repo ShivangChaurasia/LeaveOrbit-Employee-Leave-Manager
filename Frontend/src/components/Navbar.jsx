@@ -19,10 +19,8 @@ import {
     Wallet,
     UserPlus
 } from 'lucide-react';
-
 import Lottie from 'lottie-react';
 import logoData from '../Assets/logo.json';
-
 export const Navbar = () => {
     const { user, logout } = useAuth();
     const { theme, toggleTheme } = useTheme();
@@ -30,7 +28,6 @@ export const Navbar = () => {
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
-
     const menuItems = [
         { icon: CalendarDays, label: 'Home', path: '/home', roles: ['employee', 'manager', 'admin'] },
         { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard', roles: ['employee', 'manager', 'admin'] },
@@ -41,12 +38,10 @@ export const Navbar = () => {
         { icon: Users, label: 'Directory', path: '/users', roles: ['admin'] },
         { icon: UserPlus, label: 'Account Requests', path: '/requests', roles: ['admin'] },
     ].filter(item => item.roles.includes(user?.role));
-
     const handleLogout = async () => {
         await logout();
         navigate('/login');
     };
-
     return (
         <nav className="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 transition-all duration-500">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -58,8 +53,7 @@ export const Navbar = () => {
                             </div>
                             <span className="text-xl font-bold text-slate-900 dark:text-white">LeaveOrbit</span>
                         </Link>
-
-                        {/* Desktop Menu */}
+                        {}
                         <div className="hidden md:flex items-center gap-1">
                             {menuItems.map((item) => (
                                 <Link
@@ -76,18 +70,15 @@ export const Navbar = () => {
                             ))}
                         </div>
                     </div>
-
                     <div className="flex items-center gap-2">
-                        {/* Theme Toggle */}
+                        {}
                         <button
                             onClick={toggleTheme}
                             className="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
                         >
                             {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
                         </button>
-
-
-                        {/* Profile or Guest Links */}
+                        {}
                         {user ? (
                             <div className="relative ml-2">
                                 <button
@@ -101,7 +92,6 @@ export const Navbar = () => {
                                     <UserCircle size={28} className="text-blue-600 dark:text-blue-400" />
                                     <ChevronDown size={14} className={`text-slate-400 transition-transform ${profileOpen ? 'rotate-180' : ''}`} />
                                 </button>
-
                                 {profileOpen && (
                                     <>
                                         <div className="fixed inset-0 z-10" onClick={() => setProfileOpen(false)}></div>
@@ -137,8 +127,7 @@ export const Navbar = () => {
                                 <Link to="/register" className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-all shadow-md">Sign Up</Link>
                             </div>
                         )}
-
-                        {/* Mobile Menu Toggle */}
+                        {}
                         <div className="flex md:hidden">
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
@@ -150,8 +139,7 @@ export const Navbar = () => {
                     </div>
                 </div>
             </div>
-
-            {/* Mobile Menu */}
+            {}
             {isOpen && (
                 <div className="md:hidden border-t border-slate-100 dark:border-slate-800 p-4 space-y-2 bg-white dark:bg-slate-900">
                     {menuItems.map((item) => (

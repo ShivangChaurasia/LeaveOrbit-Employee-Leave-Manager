@@ -14,21 +14,18 @@ import {
     TrendingUp
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
 export const Reimbursements = () => {
     const [reimbursements, setReimbursements] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
-
     const [formData, setFormData] = useState({
         title: '',
         amount: '',
         category: 'Other',
         description: '',
     });
-
     const fetchReimbursements = async () => {
         try {
             const res = await api.get('/reimbursements');
@@ -39,11 +36,9 @@ export const Reimbursements = () => {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         fetchReimbursements();
     }, []);
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmitting(true);
@@ -60,13 +55,11 @@ export const Reimbursements = () => {
             setSubmitting(false);
         }
     };
-
     const stats = [
         { label: 'Total Claims', value: reimbursements.length, icon: ReceiptText, color: 'blue' },
         { label: 'Pending', value: reimbursements.filter(r => r.status === 'pending').length, icon: Clock, color: 'amber' },
         { label: 'Approved', value: reimbursements.filter(r => r.status === 'approved').length, icon: CheckCircle2, color: 'emerald' },
     ];
-
     if (loading) return (
         <div className="flex items-center justify-center min-h-[400px]">
             <motion.div
@@ -76,7 +69,6 @@ export const Reimbursements = () => {
             />
         </div>
     );
-
     return (
         <div className="space-y-8 max-w-5xl mx-auto">
             <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -92,7 +84,6 @@ export const Reimbursements = () => {
                     {showForm ? 'Cancel Request' : 'New Claim'}
                 </button>
             </header>
-
             {message.text && (
                 <motion.div
                     initial={{ opacity: 0, y: -10 }}
@@ -104,7 +95,6 @@ export const Reimbursements = () => {
                     <p className="text-sm font-bold">{message.text}</p>
                 </motion.div>
             )}
-
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {stats.map((stat) => (
                     <div key={stat.label} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm dark:shadow-none transition-all">
@@ -120,7 +110,6 @@ export const Reimbursements = () => {
                     </div>
                 ))}
             </div>
-
             <AnimatePresence>
                 {showForm && (
                     <motion.div
@@ -197,7 +186,6 @@ export const Reimbursements = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-
             <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm">
                 <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
                     <h3 className="font-black text-slate-900 dark:text-white">Recent Claims</h3>

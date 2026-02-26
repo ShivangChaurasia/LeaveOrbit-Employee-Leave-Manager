@@ -12,13 +12,11 @@ import {
     XCircle,
     UserCircle
 } from 'lucide-react';
-
 export const UserManagement = () => {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [search, setSearch] = useState('');
-
     const fetchUsers = async () => {
         try {
             setLoading(true);
@@ -31,16 +29,13 @@ export const UserManagement = () => {
             setLoading(false);
         }
     };
-
     useEffect(() => {
         fetchUsers();
     }, []);
-
     const filteredUsers = users.filter(user =>
         user.name?.toLowerCase().includes(search.toLowerCase()) ||
         user.email?.toLowerCase().includes(search.toLowerCase())
     );
-
     const handleDeleteUser = async (userId) => {
         if (!window.confirm('Are you sure you want to terminate this account? This action cannot be undone.')) return;
         try {
@@ -51,13 +46,11 @@ export const UserManagement = () => {
             console.error(err);
         }
     };
-
     if (loading) return (
         <div className="flex items-center justify-center min-h-[400px]">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
         </div>
     );
-
     return (
         <div className="space-y-8 animate-in fade-in duration-700">
             <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
@@ -78,13 +71,11 @@ export const UserManagement = () => {
                     </div>
                 </div>
             </header>
-
             {error && (
                 <div className="bg-rose-50 dark:bg-rose-900/20 border border-rose-200 dark:border-rose-900 text-rose-600 p-4 rounded-xl text-sm font-medium">
                     {error}
                 </div>
             )}
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredUsers.map((user) => (
                     <div key={user._id} className="group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 hover:border-blue-500/50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-600/5 relative overflow-hidden">
@@ -99,7 +90,6 @@ export const UserManagement = () => {
                                 </button>
                             )}
                         </div>
-
                         <div className="flex items-start justify-between mb-6">
                             <div className="w-14 h-14 rounded-2xl bg-blue-600/10 flex items-center justify-center text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">
                                 <UserCircle size={32} />
@@ -113,7 +103,6 @@ export const UserManagement = () => {
                                 {user.role}
                             </div>
                         </div>
-
                         <div className="space-y-4">
                             <div>
                                 <h3 className="text-lg font-bold text-slate-900 dark:text-white truncate">{user.name}</h3>
@@ -122,7 +111,6 @@ export const UserManagement = () => {
                                     <span className="text-sm font-medium truncate">{user.email}</span>
                                 </div>
                             </div>
-
                             <div className="pt-4 border-t border-slate-100 dark:border-slate-800 grid grid-cols-2 gap-4">
                                 <div className="space-y-1">
                                     <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Department</div>
@@ -152,7 +140,6 @@ export const UserManagement = () => {
                     </div>
                 ))}
             </div>
-
             {filteredUsers.length === 0 && (
                 <div className="text-center py-20 bg-slate-50 dark:bg-slate-900/50 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-800">
                     <Users className="mx-auto text-slate-300 dark:text-slate-700 mb-4" size={48} />

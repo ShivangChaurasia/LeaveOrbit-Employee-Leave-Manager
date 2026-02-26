@@ -21,11 +21,8 @@ import {
 } from 'lucide-react';
 import HeroAnimation from '../../components/HeroAnimation';
 import { motion } from 'framer-motion';
-
 export const Home = () => {
     const { user } = useAuth();
-
-
     const features = [
         {
             title: 'Intelligent Planning',
@@ -52,16 +49,13 @@ export const Home = () => {
             color: 'amber'
         }
     ];
-
     return (
         <div className="min-h-screen bg-transparent text-slate-900 dark:text-slate-200 transition-colors duration-500">
-
-            {/* Hero Section */}
+            {}
             <section className="relative pt-20 pb-32 overflow-hidden">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[1000px] bg-gradient-to-b from-blue-600/20 via-blue-900/5 to-transparent pointer-events-none" />
                 <div className="absolute -top-24 -left-24 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full pointer-events-none" />
                 <div className="absolute top-1/2 -right-24 w-80 h-80 bg-indigo-600/10 blur-[100px] rounded-full pointer-events-none" />
-
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 pt-16">
                     <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24">
                         <motion.div
@@ -92,7 +86,6 @@ export const Home = () => {
                                 </Link>
                             </div>
                         </motion.div>
-
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -102,22 +95,20 @@ export const Home = () => {
                             <div className="relative z-10 w-full aspect-square max-w-2xl mx-auto">
                                 <HeroAnimation />
                             </div>
-                            {/* Decorative Elements */}
+                            {}
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] border border-blue-500/5 rounded-full animate-pulse-slow pointer-events-none" />
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] h-[140%] border border-indigo-500/5 rounded-full animate-pulse-slow delay-700 pointer-events-none" />
                         </motion.div>
                     </div>
                 </div>
             </section>
-
-            {/* Features Showcase */}
+            {}
             <section className="py-32 relative bg-slate-900/30">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-3xl mb-16">
                         <h2 className="text-3xl lg:text-4xl font-bold text-slate-900 dark:text-white mb-4">Core Functionality</h2>
                         <p className="text-slate-600 dark:text-slate-400 text-lg">LeaveOrbit is built with a focus on administrative efficiency and organizational transparency.</p>
                     </div>
-
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {features.map((feature, idx) => (
                             <motion.div
@@ -146,7 +137,6 @@ export const Home = () => {
                     </div>
                 </div>
             </section>
-
         </div>
     );
 };

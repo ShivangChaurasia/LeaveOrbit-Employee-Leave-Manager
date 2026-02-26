@@ -16,27 +16,21 @@ import {
     Eye,
     EyeOff
 } from 'lucide-react';
-
 export const Settings = () => {
     const { theme, toggleTheme } = useTheme();
     const { user, setUser } = useAuth();
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState({ type: '', text: '' });
-
-    // Profile State
     const [profileData, setProfileData] = useState({
         name: user?.name || '',
         department: user?.department || '',
     });
-
-    // Password State
     const [passwordData, setPasswordData] = useState({
         currentPassword: '',
         newPassword: '',
         confirmPassword: '',
     });
     const [showPasswords, setShowPasswords] = useState(false);
-
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -51,7 +45,6 @@ export const Settings = () => {
             setLoading(false);
         }
     };
-
     const handleChangePassword = async (e) => {
         e.preventDefault();
         if (passwordData.newPassword !== passwordData.confirmPassword) {
@@ -72,7 +65,6 @@ export const Settings = () => {
             setLoading(false);
         }
     };
-
     const sections = [
         {
             title: 'Appearance',
@@ -206,14 +198,12 @@ export const Settings = () => {
             )
         }
     ];
-
     return (
         <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
             <header>
                 <h1 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Account Settings</h1>
                 <p className="text-slate-600 dark:text-slate-400 font-medium">Manage your profile, theme, and account security.</p>
             </header>
-
             {message.text && (
                 <div className={`p-4 rounded-2xl border flex items-center gap-3 animate-in zoom-in-95 duration-300 ${message.type === 'success'
                         ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-400'
@@ -223,7 +213,6 @@ export const Settings = () => {
                     <p className="text-sm font-bold">{message.text}</p>
                 </div>
             )}
-
             <div className="space-y-6 pb-20">
                 {sections.map((section) => (
                     <div key={section.title} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm dark:shadow-none transition-all overflow-hidden relative">
@@ -239,7 +228,6 @@ export const Settings = () => {
                         {section.content}
                     </div>
                 ))}
-
                 <div className="bg-rose-500/5 border border-rose-500/10 rounded-3xl p-6">
                     <h3 className="text-rose-600 font-black mb-1">Danger Zone</h3>
                     <p className="text-xs font-bold text-rose-500/70 uppercase tracking-widest mb-4">Actions here are permanent and cannot be undone.</p>

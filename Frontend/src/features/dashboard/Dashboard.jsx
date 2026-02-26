@@ -7,9 +7,9 @@ import {
     CheckCircle2,
     XCircle,
     Clock,
-    ArrowRight
+    ArrowRight,
+    UserPlus
 } from 'lucide-react';
-
 export const Dashboard = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -19,36 +19,48 @@ export const Dashboard = () => {
         rejected: 0,
         totalUsers: 0,
         pendingRequests: 0,
+        employeeLeaves: 0,
         balance: user?.leaveBalance || 0
     });
-
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
                 if (user.role === 'admin') {
-                    // Admin management stats
                     const [usersRes, leavesRes] = await Promise.all([
                         api.get('/users'),
                         api.get('/leaves/all')
                     ]);
-
                     const users = usersRes.data.data.users;
                     const leaves = leavesRes.data.data.leaves;
-
                     setStats({
                         totalUsers: users.length,
                         pendingRequests: users.filter(u => u.accountStatus === 'pending').length,
+                        employeeLeaves: leaves.filter(l => l.status === 'pending').length,
                         pending: leaves.filter(l => l.status === 'pending' && l.employee?.role === 'manager').length,
-                        balance: users.filter(u => !u.onLeave).length // Overload balance for "Available Employees"
+                        balance: users.filter(u => !u.onLeave).length
+                    });
+                } else if (user.role === 'manager') {
+                    const [myRes, pendingRes] = await Promise.all([
+                        api.get('/leaves/my'),
+                        api.get('/leaves/pending')
+                    ]);
+                    const myLeaves = myRes.data.data.leaves;
+                    const pendingLeaves = pendingRes.data.data.leaves;
+                    setStats({
+                        pending: myLeaves.filter(l => l.status === 'pending').length,
+                        approved: myLeaves.filter(l => l.status === 'approved').length,
+                        rejected: myLeaves.filter(l => l.status === 'rejected').length,
+                        employeeLeaves: pendingLeaves.length,
+                        balance: user?.leaveBalance || 0
                     });
                 } else {
-                    // Employee/Manager stats
                     const response = await api.get('/leaves/my');
                     const leaves = response.data.data.leaves;
                     setStats({
                         pending: leaves.filter(l => l.status === 'pending').length,
                         approved: leaves.filter(l => l.status === 'approved').length,
                         rejected: leaves.filter(l => l.status === 'rejected').length,
+                        employeeLeaves: 0,
                         balance: user?.leaveBalance || 0
                     });
                 }
@@ -58,26 +70,28 @@ export const Dashboard = () => {
         };
         fetchDashboardData();
     }, [user]);
-
     const statCards = user.role === 'admin' ? [
         { label: 'Total Employees', value: stats.totalUsers, icon: CheckCircle2, color: 'text-blue-500', bg: 'bg-blue-500/10' },
-        { label: 'Account Requests', value: stats.pendingRequests, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/10' },
-        { label: 'Manager Approvals', value: stats.pending, icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+        { label: 'Leaves to Approve', value: stats.employeeLeaves, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+        { label: 'Account Requests', value: stats.pendingRequests, icon: UserPlus, color: 'text-rose-500', bg: 'bg-rose-500/10' },
         { label: 'Available Today', value: stats.balance, icon: Calendar, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
+    ] : user.role === 'manager' ? [
+        { label: 'Employee Leaves', value: stats.employeeLeaves, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+        { label: 'My Leave Balance', value: stats.balance, icon: Calendar, color: 'text-blue-500', bg: 'bg-blue-500/10' },
+        { label: 'My Pending', value: stats.pending, icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+        { label: 'My History', value: stats.approved + stats.rejected, icon: CheckCircle2, color: 'text-indigo-500', bg: 'bg-indigo-500/10' },
     ] : [
         { label: 'Available Balance', value: stats.balance, icon: Calendar, color: 'text-blue-500', bg: 'bg-blue-500/10' },
         { label: 'Pending Requests', value: stats.pending, icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/10' },
         { label: 'Approved', value: stats.approved, icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
         { label: 'Rejected', value: stats.rejected, icon: XCircle, color: 'text-rose-500', bg: 'bg-rose-500/10' },
     ];
-
     return (
         <div className="space-y-8">
             <header>
                 <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Dashboard</h1>
                 <p className="text-slate-600 dark:text-slate-400">Welcome back, {user?.name}</p>
             </header>
-
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {statCards.map((stat) => (
                     <div key={stat.label} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-none transition-all">
@@ -91,7 +105,6 @@ export const Dashboard = () => {
                     </div>
                 ))}
             </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm dark:shadow-none">
                     <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
@@ -104,22 +117,21 @@ export const Dashboard = () => {
                         {user.role === 'admin' ? 'Monitoring organization-wide activity...' : 'No recent activity found.'}
                     </div>
                 </div>
-
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 text-white relative overflow-hidden shadow-xl shadow-blue-500/20">
                     <div className="relative z-10">
                         <h2 className="text-2xl font-bold mb-2">
                             {user.role === 'admin' ? 'Strategic Overview' : 'Need a break?'}
                         </h2>
                         <p className="text-blue-100 mb-6">
-                            {user.role === 'admin'
-                                ? 'Review pending approvals and optimize team availability.'
+                            {user.role === 'admin' || user.role === 'manager'
+                                ? `You have ${stats.employeeLeaves} pending employee leave requests to review.`
                                 : 'Apply for your next leave in just a few clicks.'}
                         </p>
                         <button
-                            onClick={() => navigate(user.role === 'admin' ? '/requests' : '/leaves')}
+                            onClick={() => navigate(user.role === 'admin' || user.role === 'manager' ? '/approvals' : '/leaves')}
                             className="bg-white text-blue-600 px-6 py-3 rounded-xl font-bold hover:bg-blue-50 transition-colors"
                         >
-                            {user.role === 'admin' ? 'View Requests' : 'Apply for Leave'}
+                            {user.role === 'admin' || user.role === 'manager' ? 'Manage Approvals' : 'Apply for Leave'}
                         </button>
                     </div>
                     <Calendar className="absolute -right-8 -bottom-8 text-blue-400/20 w-48 h-48 -rotate-12" />
@@ -128,5 +140,4 @@ export const Dashboard = () => {
         </div>
     );
 };
-
 const cn = (...inputs) => inputs.filter(Boolean).join(' ');

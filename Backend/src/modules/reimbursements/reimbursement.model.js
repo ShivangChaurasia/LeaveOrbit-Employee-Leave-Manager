@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const reimbursementSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -40,5 +39,4 @@ const reimbursementSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 });
-
 module.exports = mongoose.model('Reimbursement', reimbursementSchema);
