@@ -1,16 +1,27 @@
 const User = require('./user.model');
+const PendingUser = require('./pendingUser.model');
 
 const getAllUsers = async (filters = {}) => {
-    return await User.find(filters).lean();
+    const approvedUsers = await User.find(filters).lean();
+    const pendingUsers = await PendingUser.find(filters).lean();
+    return [...approvedUsers, ...pendingUsers];
 };
 
 const getUserById = async (id) => {
-    return await User.findById(id).lean();
+    let user = await User.findById(id).lean();
+    if (!user) {
+        user = await PendingUser.findById(id).lean();
+    }
+    return user;
 };
 
 const completeOnboarding = async (userId, data) => {
     const { name, department, role } = data;
-    const user = await User.findById(userId);
+    let user = await User.findById(userId);
+
+    if (!user) {
+        user = await PendingUser.findById(userId);
+    }
 
     if (!user) {
         const error = new Error('User not found');
@@ -23,12 +34,15 @@ const completeOnboarding = async (userId, data) => {
     user.role = role || 'employee';
     user.onboardingCompleted = true;
 
-    // If role is manager, set approval status to pending
-    if (user.role === 'manager') {
-        user.managerApprovalStatus = 'pending';
+    // Admin is always approved. Everyone else is pending Admin approval.
+    if (user.role === 'admin' || user.email === 'shiva17ng@gmail.com') {
+        user.accountStatus = 'approved';
     } else {
-        user.managerApprovalStatus = 'approved';
+        user.accountStatus = 'pending';
     }
+
+    // Unify: managerApprovalStatus is no longer used for onboarding block
+    user.managerApprovalStatus = 'approved';
 
     await user.save();
     return user;
@@ -54,16 +68,44 @@ const approveManager = async (managerId, status) => {
 };
 
 const approveAccount = async (userId, status) => {
-    const user = await User.findById(userId);
-    if (!user) {
-        const error = new Error('User not found');
+    if (status === 'approved') {
+        const pendingUser = await PendingUser.findById(userId).select('+password');
+
+        if (pendingUser) {
+            // Move from PendingUser to User
+            const userData = pendingUser.toObject();
+            userData.accountStatus = 'approved';
+            userData.managerApprovalStatus = 'approved';
+
+            // Direct insert to preserve _id and avoid re-hashing password
+            await User.collection.insertOne(userData);
+            await PendingUser.findByIdAndDelete(userId);
+
+            return await User.findById(userId);
+        } else {
+            // Check if already in User collection but status is pending
+            const user = await User.findById(userId);
+            if (user) {
+                user.accountStatus = 'approved';
+                user.managerApprovalStatus = 'approved';
+                await user.save();
+                return user;
+            }
+        }
+        const error = new Error('User not found in any collection');
         error.statusCode = 404;
         throw error;
+
+    } else if (status === 'rejected') {
+        // Try both collections
+        let user = await PendingUser.findByIdAndUpdate(userId, { accountStatus: 'rejected' }, { new: true });
+        if (!user) {
+            user = await User.findByIdAndUpdate(userId, { accountStatus: 'rejected' }, { new: true });
+        }
+        return user;
     }
 
-    user.accountStatus = status;
-    await user.save();
-    return user;
+    return null;
 };
 
 const deleteUser = async (userId) => {

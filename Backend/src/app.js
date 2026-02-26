@@ -39,10 +39,19 @@ app.get('/health', (req, res) => {
 // Error Handling Middleware
 app.use((err, req, res, next) => {
     console.error(`${err.name}: ${err.message}`);
-    const statusCode = err.statusCode || 500;
+
+    let statusCode = err.statusCode || 500;
+    let message = err.message || 'Internal Server Error';
+
+    // Handle MongoDB duplicate key error
+    if (err.code === 11000) {
+        statusCode = 400;
+        message = 'User already exists';
+    }
+
     res.status(statusCode).json({
         status: 'error',
-        message: err.message || 'Internal Server Error',
+        message: message,
         stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
     });
 });

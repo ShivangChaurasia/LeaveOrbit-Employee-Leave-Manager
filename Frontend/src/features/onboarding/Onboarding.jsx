@@ -5,7 +5,7 @@ import api from '../../services/api';
 import { UserPlus, Building, Briefcase } from 'lucide-react';
 
 export const Onboarding = () => {
-    const { user, setUser } = useAuth();
+    const { user, setUser, checkAuthStatus } = useAuth();
     const [department, setDepartment] = useState('');
     const [name, setName] = useState(user?.name || '');
     const [role, setRole] = useState('employee');
@@ -23,7 +23,7 @@ export const Onboarding = () => {
             const updatedUser = response.data.data.user;
             setUser(updatedUser);
 
-            if (updatedUser.accountStatus === 'pending') {
+            if (updatedUser.accountStatus === 'pending' || updatedUser.managerApprovalStatus === 'pending') {
                 setSubmitted(true);
             } else {
                 navigate('/dashboard');
@@ -35,7 +35,9 @@ export const Onboarding = () => {
         }
     };
 
-    if (submitted || (user?.onboardingCompleted && user?.accountStatus === 'pending')) {
+    const isPending = user?.accountStatus === 'pending';
+
+    if (submitted || (user?.onboardingCompleted && isPending)) {
         return (
             <div className="max-w-xl mx-auto mt-12 px-4">
                 <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-8 shadow-xl text-center">
@@ -51,7 +53,10 @@ export const Onboarding = () => {
                         <p>Our administrators have been notified. Please check back later.</p>
                     </div>
                     <button
-                        onClick={() => navigate('/')}
+                        onClick={async () => {
+                            await checkAuthStatus();
+                            navigate('/');
+                        }}
                         className="w-full bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-semibold py-3 rounded-lg transition-all"
                     >
                         Back to Home

@@ -119,6 +119,13 @@ const updateLeaveStatus = async (leaveId, status, reviewerId, note) => {
 
     const reviewer = await User.findById(reviewerId);
 
+    // Prevent self-approval
+    if (leave.employee._id.toString() === reviewerId.toString()) {
+        const error = new Error('You cannot approve your own leave request');
+        error.statusCode = 403;
+        throw error;
+    }
+
     // Enforce Hierarchy
     if (reviewer.role === 'manager') {
         if (leave.employee.role !== 'employee' || leave.employee.department !== reviewer.department) {

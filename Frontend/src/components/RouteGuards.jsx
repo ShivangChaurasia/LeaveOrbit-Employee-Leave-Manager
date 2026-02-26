@@ -13,19 +13,31 @@ export const ProtectedRoute = () => {
 
     if (!user) return <Navigate to="/login" replace />;
 
-    if (!user.onboardingCompleted && location.pathname !== '/onboarding') {
-        return <Navigate to="/onboarding" replace />;
+    // 1. Admin bypasses everything
+    if (user.role === 'admin') {
+        if (location.pathname === '/onboarding') return <Navigate to="/dashboard" replace />;
+        return <Outlet />;
     }
 
-    // Block access if account is not approved by Admin
-    if (user.accountStatus === 'pending' && location.pathname !== '/onboarding') {
-        return <Navigate to="/onboarding" replace />;
+    // 2. Force Onboarding if not completed
+    if (!user.onboardingCompleted) {
+        if (location.pathname !== '/onboarding') return <Navigate to="/onboarding" replace />;
+        return <Outlet />;
     }
 
-    // If manager is pending approval, they can only see onboarding or nothing
-    if (user.role === 'manager' && user.managerApprovalStatus === 'pending' && location.pathname !== '/onboarding') {
-        return <Navigate to="/onboarding" replace />;
+    // 3. Block access if account is pending approval
+    const isPending = user.accountStatus === 'pending';
+    if (isPending) {
+        if (location.pathname !== '/onboarding') return <Navigate to="/onboarding" replace />;
+        return <Outlet />;
     }
+
+    // 4. Redirect away from onboarding if already set up and approved
+    if (location.pathname === '/onboarding') {
+        return <Navigate to="/dashboard" replace />;
+    }
+
+    return <Outlet />;
 
     return <Outlet />;
 };
@@ -57,7 +69,7 @@ export const PublicRoute = ({ children }) => {
     );
 
     if (user) {
-        if (!user.onboardingCompleted) return <Navigate to="/onboarding" replace />;
+        if (!user.onboardingCompleted && user.role !== 'admin') return <Navigate to="/onboarding" replace />;
         return <Navigate to="/dashboard" replace />;
     }
 

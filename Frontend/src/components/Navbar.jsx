@@ -34,6 +34,7 @@ export const Navbar = () => {
     const menuItems = [
         { icon: CalendarDays, label: 'Home', path: '/home', roles: ['employee', 'manager', 'admin'] },
         { icon: LayoutDashboard, label: 'Dashboard', path: '/dashboard', roles: ['employee', 'manager', 'admin'] },
+        { icon: LayoutDashboard, label: 'Analytics', path: '/analytics', roles: ['employee', 'manager', 'admin'] },
         { icon: ClipboardCheck, label: 'My Leaves', path: '/leaves', roles: ['employee', 'manager'] },
         { icon: Wallet, label: 'Reimbursements', path: '/reimbursements', roles: ['employee', 'manager'] },
         { icon: ClipboardCheck, label: 'Approvals', path: '/approvals', roles: ['manager', 'admin'] },

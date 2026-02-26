@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
+const pendingUserSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, 'Please add a name'],
@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: function () { return this.provider === 'local'; },
-        select: false, // Don't return password by default
+        select: false,
     },
     provider: {
         type: String,
@@ -33,10 +33,6 @@ const userSchema = new mongoose.Schema({
     department: {
         type: String,
         trim: true,
-    },
-    leaveBalance: {
-        type: Number,
-        default: 20,
     },
     onboardingCompleted: {
         type: Boolean,
@@ -57,7 +53,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Encrypt password using bcrypt
-userSchema.pre('save', async function () {
+pendingUserSchema.pre('save', async function () {
     if (!this.isModified('password')) {
         return;
     }
@@ -65,9 +61,4 @@ userSchema.pre('save', async function () {
     this.password = await bcrypt.hash(this.password, salt);
 });
 
-// Match user entered password to hashed password in database
-userSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
-};
-
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('PendingUser', pendingUserSchema);

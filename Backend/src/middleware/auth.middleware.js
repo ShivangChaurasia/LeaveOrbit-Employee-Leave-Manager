@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../modules/users/user.model');
+const PendingUser = require('../modules/users/pendingUser.model');
 const { verifyToken } = require('../modules/auth/auth.utils');
 
 const protect = async (req, res, next) => {
@@ -16,6 +17,11 @@ const protect = async (req, res, next) => {
     try {
         const decoded = verifyToken(token);
         req.user = await User.findById(decoded.id);
+
+        if (!req.user) {
+            req.user = await PendingUser.findById(decoded.id);
+        }
+
         if (!req.user) {
             return res.status(401).json({ message: 'User not found' });
         }

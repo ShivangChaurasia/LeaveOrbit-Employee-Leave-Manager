@@ -94,6 +94,7 @@ export const AuthProvider = ({ children }) => {
         firebaseLogin,
         logout,
         setUser,
+        checkAuthStatus,
     };
 
     return (

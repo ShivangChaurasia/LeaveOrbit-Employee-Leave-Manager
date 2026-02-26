@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { UserPlus, Mail, Lock, User, ArrowRight, ArrowLeft } from 'lucide-react';
+import { UserPlus, Mail, Lock, User, ArrowRight, ArrowLeft, Chrome } from 'lucide-react';
 import Lottie from 'lottie-react';
 import successData from '../../Assets/success.json';
 
@@ -13,7 +13,7 @@ export const Register = () => {
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const { register, login, showSuccess } = useAuth();
+    const { register, login, googleLogin, showSuccess } = useAuth();
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -33,6 +33,16 @@ export const Register = () => {
             setError(err.response?.data?.message || 'Registration failed');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleGoogleSignup = async () => {
+        setError('');
+        try {
+            await googleLogin();
+            setTimeout(() => navigate('/dashboard'), 2000);
+        } catch (err) {
+            setError('Google signup failed');
         }
     };
 
@@ -171,6 +181,25 @@ export const Register = () => {
                                 )}
                             </button>
                         </form>
+
+                        <div className="mt-8">
+                            <div className="relative mb-8">
+                                <div className="absolute inset-0 flex items-center">
+                                    <div className="w-full border-t border-slate-200 dark:border-slate-800"></div>
+                                </div>
+                                <div className="relative flex justify-center text-xs">
+                                    <span className="px-4 bg-white dark:bg-slate-900 text-slate-400 font-bold uppercase tracking-wider">Or Secure Register</span>
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={handleGoogleSignup}
+                                className="w-full bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold py-4 rounded-xl transition-all flex items-center justify-center gap-3 active:scale-[0.98]"
+                            >
+                                <Chrome size={20} />
+                                Google Workspace
+                            </button>
+                        </div>
 
                         <p className="mt-10 text-center text-slate-500 text-sm font-bold">
                             Already have an account?{' '}
