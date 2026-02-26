@@ -34,19 +34,41 @@ LeaveOrbit is a modern, full-stack employee leave management system designed to 
 
 ## 📂 Project Structure
 
+### 🖥️ Frontend (React + Vite)
 ```bash
-LeaveOrbit-Employee-Leave-Manager/
-├── 📁 Backend/          # Node.js/Express Server
-│   ├── 📁 src/
-│   │   ├── 📁 modules/  # API business logic
-│   │   └── 📁 config/   # Environment & Security setup
-│   └── server.js        # Main entry point
-├── 📁 Frontend/         # React/Vite Client
-│   ├── 📁 src/
-│   │   ├── 📁 features/ # Component modules (Auth, Leaves, Dashboard)
-│   │   └── 📁 context/  # State management (Auth, Theme)
-│   └── index.html
-└── README.md            # You are here!
+Frontend/
+├── 📁 src/
+│   ├── 📁 features/           # Modular feature-based components
+│   │   ├── 📁 auth/           # Login & Registration logic
+│   │   ├── 📁 dashboard/      # Analytics & Overview components
+│   │   ├── 📁 leaves/         # Leave forms, Approvals, My Leaves
+│   │   ├── 📁 reimbursements/ # Reimbursement management
+│   │   └── 📁 admin/          # User management & Account requests
+│   ├── 📁 components/         # Global shared components (Navbar, Sidebar, Guards)
+│   ├── 📁 context/            # Auth & Theme context providers
+│   ├── 📁 layouts/            # Page layouts (AppLayout, PublicLayout)
+│   ├── 📁 services/           # API service layers
+│   ├── 📄 App.jsx             # Main routing and provider setup
+│   └── 📄 main.jsx            # Entry point
+├── 📁 public/                 # Static assets
+└── 📄 vite.config.js          # Vite configuration
+```
+
+### ⚙️ Backend (Node.js + Express)
+```bash
+Backend/
+├── 📁 src/
+│   ├── 📁 modules/            # Business logic by module
+│   │   ├── 📁 auth/           # Auth controllers & services
+│   │   ├── 📁 leaves/         # Leave handling logic
+│   │   ├── 📁 reimbursements/ # Reimbursement logic
+│   │   └── 📁 users/          # User profile & admin logic
+│   ├── 📁 config/             # Database, Firebase & Security configs
+│   ├── 📁 middleware/         # Custom Express middlewares
+│   ├── 📁 utils/              # Helper functions & constants
+│   └── 📄 app.js              # Express app initialization
+├── 📄 server.js               # Server entry point
+└── 📁 logs/                   # System and error logs
 ```
 
 ---
