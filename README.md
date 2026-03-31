@@ -118,6 +118,20 @@ Backend/
 - `VITE_API_URL`: Backend server address
 
 ---
+## 🚧 iOS App (SwiftUI) – Planned
+
+Extending LeaveOrbit into a mobile-first experience using SwiftUI.
+
+Planned Features:
+- Apply & track leaves via mobile app
+- Real-time approval notifications
+- Offline caching using CoreData
+- REST API integration with Node.js backend
+- MVVM architecture for scalable design
+
+Goal: Deliver a seamless employee experience across web and iOS platforms.
+
+---
 
 ## 📄 License
 This project is licensed under the **ISC License**.
