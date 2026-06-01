@@ -1,7 +1,7 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+    import { createContext, useContext, useState, useEffect } from 'react';
 import api from '../services/api';
 import { auth, googleProvider } from '../services/firebase';
-import { signInWithPopup, onAuthStateChanged, signOut } from 'firebase/auth';
+import { signInWithPopup, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut } from 'firebase/auth';
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }) => {
@@ -38,7 +38,16 @@ export const AuthProvider = ({ children }) => {
             return await firebaseLogin(idToken);
         } catch (error) {
             console.error('Google Login Error:', error);
-            throw error;
+            if (
+                error.code === 'auth/popup-blocked' ||
+                error.code === 'auth/cancelled-popup-request' ||
+                error.code === 'auth/operation-not-supported-in-this-environment'
+            ) {
+                console.log('Popup blocked or not supported, falling back to signInWithRedirect...');
+                await signInWithRedirect(auth, googleProvider);
+            } else {
+                throw error;
+            }
         }
     };
     const logout = async () => {
@@ -68,7 +77,22 @@ export const AuthProvider = ({ children }) => {
         }
     };
     useEffect(() => {
-        checkAuthStatus();
+        const handleRedirectResult = async () => {
+            setLoading(true);
+            try {
+                const result = await getRedirectResult(auth);
+                if (result) {
+                    const idToken = await result.user.getIdToken();
+                    await firebaseLogin(idToken);
+                    return;
+                }
+            } catch (error) {
+                console.error('Redirect sign-in error:', error);
+            }
+            await checkAuthStatus();
+        };
+
+        handleRedirectResult();
     }, []);
     const value = {
         user,
