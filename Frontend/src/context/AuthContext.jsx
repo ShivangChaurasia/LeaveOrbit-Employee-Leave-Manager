@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const idToken = await result.user.getIdToken();
+            // console.log("User is", idToken);
             return await firebaseLogin(idToken);
         } catch (error) {
             console.error('Google Login Error:', error);
@@ -84,6 +85,7 @@ export const AuthProvider = ({ children }) => {
                 if (result) {
                     const idToken = await result.user.getIdToken();
                     await firebaseLogin(idToken);
+                    
                     setLoading(false);
                     return;
                 }
