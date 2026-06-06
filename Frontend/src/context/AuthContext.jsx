@@ -84,6 +84,7 @@ export const AuthProvider = ({ children }) => {
                 if (result) {
                     const idToken = await result.user.getIdToken();
                     await firebaseLogin(idToken);
+                    setLoading(false);
                     return;
                 }
             } catch (error) {
