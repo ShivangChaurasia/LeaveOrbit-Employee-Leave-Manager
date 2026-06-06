@@ -62,6 +62,7 @@ pendingUserSchema.pre('save', async function () {
     this.password = await bcrypt.hash(this.password, salt);
 });
 pendingUserSchema.methods.matchPassword = async function (enteredPassword) {
+    if (!this.password) return false;
     return await bcrypt.compare(enteredPassword, this.password);
 };
 module.exports = mongoose.model('PendingUser', pendingUserSchema);
